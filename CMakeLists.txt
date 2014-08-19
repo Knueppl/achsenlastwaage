@@ -17,6 +17,8 @@ set(MOC_HEADERS ${SRC_DIR}/axis_view.h
                 ${SRC_DIR}/plot_weights.h
                 ${SRC_DIR}/vehicle_manager.h
                 ${SRC_DIR}/weight_list.h
+                ${SRC_DIR}/SupplierDialog.h
+                ${SRC_DIR}/ProductDialog.h
                 )
 
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
@@ -31,6 +33,8 @@ set(SRC ${SRC_DIR}/axis_items.cpp
         ${SRC_DIR}/vehicle_manager.cpp
         ${SRC_DIR}/weight_list.cpp
         ${SRC_DIR}/weight_note.cpp
+        ${SRC_DIR}/SupplierDialog.cpp
+        ${SRC_DIR}/ProductDialog.cpp
         ${MOC_SOURCES}
         )
 

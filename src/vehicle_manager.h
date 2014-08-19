@@ -20,23 +20,6 @@
 
 #include "fzw12.h"
 
-class SupplierDialog : public QDialog
-{
-public:
-    SupplierDialog(QWidget* parent = 0);
-
-private:
-    QVBoxLayout* m_mainLayout;
-    QGridLayout* m_createLayout;
-    QGridLayout* m_deleteLayout;
-    QGroupBox*   m_groupCreate;
-    QGroupBox*   m_groupDelete;
-    QPushButton* m_deleteButton;
-    QPushButton* m_closeButton;
-    QPushButton* m_createButton;
-    QListWidget* m_list;
-    QLineEdit*   m_line;
-};
 
 class ProductsAndSuppliers : public QGroupBox
 {
@@ -50,6 +33,7 @@ public:
 
 public slots:
     void editSupplier(void);
+    void editProducts(void);
 
 private:
     void loadProductsFromFile(void);

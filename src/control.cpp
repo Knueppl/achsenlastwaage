@@ -45,7 +45,7 @@ Control::Control(QWidget* parent) : QWidget(parent) , m_weightHandler("./weights
     connect(m_waage, SIGNAL(finish(Weight*)), this, SLOT(finishWeight(Weight*)));
     connect(m_waage, SIGNAL(nextAxis(int, Weight*)), this, SLOT(nextAxis(int, Weight*)));
 #else
-    m_fzw12 = new FZW12("/dev/ttyS0");
+    m_fzw12 = new FZW12("/dev/ttyUSB0");
     connect(m_fzw12, SIGNAL(finish(Weight*)), this, SLOT(finishWeight(Weight*)));
     connect(m_fzw12, SIGNAL(nextAxis(int, Weight*)), this, SLOT(nextAxis(int, Weight*)));
 #endif

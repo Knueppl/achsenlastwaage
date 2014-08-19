@@ -1,4 +1,6 @@
 #include "vehicle_manager.h"
+#include "SupplierDialog.h"
+#include "ProductDialog.h"
 
 #include <QDebug>
 #include <QTextStream>
@@ -340,38 +342,6 @@ void DeleteVehicleDialog::updateList(void)
 }
 
 
-
-SupplierDialog::SupplierDialog(QWidget* parent) : QDialog(parent)
-{
-    m_mainLayout = new QVBoxLayout(this);
-
-    m_groupCreate = new QGroupBox("hinzufügen");
-    m_createLayout = new QGridLayout;
-    m_line = new QLineEdit;
-    m_createButton = new QPushButton("hinzufügen");
-    m_createLayout->addWidget(m_line, 0, 0);
-    m_createLayout->addWidget(m_createButton, 0, 1);
-    m_groupCreate->setLayout(m_createLayout);
-    m_mainLayout->addWidget(m_groupCreate);
-
-    m_groupDelete = new QGroupBox("löschen");
-    m_deleteLayout = new QGridLayout;
-    m_list = new QListWidget;
-    m_deleteButton = new QPushButton("löschen");
-    m_deleteLayout->addWidget(m_list, 0, 0);
-    m_deleteLayout->addWidget(m_deleteButton, 0, 1);
-    m_groupDelete->setLayout(m_deleteLayout);
-    m_mainLayout->addWidget(m_groupDelete);
-
-    m_closeButton = new QPushButton("schließen");
-    m_closeButton->setDefault(true);
-    m_mainLayout->addWidget(m_closeButton);
-
-    connect(m_closeButton, SIGNAL(clicked()), this, SLOT(accept()));
-}
-
-
-
 ProductsAndSuppliers::ProductsAndSuppliers(QWidget* parent) : QGroupBox("Wiegeschein", parent)
 {
     m_mainLayout = new QGridLayout(this);
@@ -403,7 +373,8 @@ ProductsAndSuppliers::ProductsAndSuppliers(QWidget* parent) : QGroupBox("Wiegesc
     m_editSupplier = new QPushButton("editieren");
     m_mainLayout->addWidget(m_editSupplier, 2, 1);
 
-    connect(m_editSupplier, SIGNAL(clicked()), this, SLOT(editSupplier()));
+    this->connect(m_editSupplier, SIGNAL(clicked()), this, SLOT(editSupplier()));
+    this->connect(m_editProduct, SIGNAL(clicked()), this, SLOT(editProducts()));
 }
 
 void ProductsAndSuppliers::loadProductsFromFile(void)
@@ -412,11 +383,12 @@ void ProductsAndSuppliers::loadProductsFromFile(void)
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug() << "Kann die Datei ""products"" nicht öffnen";
+        qDebug() << "Kann die Datei " << file.fileName() << " nicht öffnen.";
         return;
     }
 
     QTextStream in(&file);
+    m_products->clear();
 
     while (!in.atEnd())
     {
@@ -433,11 +405,12 @@ void ProductsAndSuppliers::loadSuppliersFromFile(void)
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug() << "Kann die Datei ""products"" nicht öffnen";
+        qDebug() << "Kann die Datei " << file.fileName() << " nicht öffnen.";
         return;
     }
 
     QTextStream in(&file);
+    m_suppliers->clear();
 
     while (!in.atEnd())
     {
@@ -450,7 +423,16 @@ void ProductsAndSuppliers::loadSuppliersFromFile(void)
 
 void ProductsAndSuppliers::editSupplier(void)
 {
-    SupplierDialog dialog;
+    SupplierDialog dialog("suppliers");
 
     dialog.exec();
+    this->loadSuppliersFromFile();
+}
+
+void ProductsAndSuppliers::editProducts(void)
+{
+    ProductDialog dialog("products");
+
+    dialog.exec();
+    this->loadProductsFromFile();
 }
