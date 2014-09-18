@@ -36,9 +36,30 @@ void Database::disconnect(void)
 
 void Database::getAllVehicles(std::vector<Vehicle*>& vehicles)
 {
-    QSqlQuery query("SELECT * FROM wiegungen");
-     while (query.next()) {
-         QString country = query.value(0).toString();
-         qDebug() << country;
-     }
+    QSqlQuery query("SELECT id, name, achsen, achse_1, achse_2, achse_3, achse_4, achse_5 FROM fahrzeuge");
+
+    while (query.next())
+    {
+        Vehicle* vehicle = new Vehicle;
+
+        vehicle->setName(query.value(1).toString());
+        vehicle->setNumberOfAxis(query.value(2).toInt());
+        vehicle->setTara(query.value(3).toInt());
+        vehicles.push_back(vehicle);
+    }
+}
+
+void Database::addVehicle(const Vehicle* vehicle)
+{
+    QSqlQuery query;
+
+    query.prepare("INSERT INTO fahrzeuge (name, tara, achsen) VALUES (?, ?, ?)");
+    query.bindValue(0, vehicle->name());
+    query.bindValue(1, vehicle->tara());
+    query.bindValue(2, vehicle->numberOfAxis());
+
+    if (!query.exec())
+    {
+        QMessageBox::critical(0, "Database Error", "Kann das Fahrzeug nicht zur Datenbank hinzufügen.");
+    }
 }

@@ -90,35 +90,6 @@ private:
     SignalLight*          m_signalLight;
 };
 
-class CreateVehicleDialog : public QDialog
-{
-    Q_OBJECT;
-
-public:
-    CreateVehicleDialog(VehicleManager* manager, QWidget* parent = 0);
-
-private slots:
-    void updateAxis(int);
-    void createVehicle(void);
-
-private:
-    VehicleManager* m_manager;
-
-    QPushButton*    m_accept;
-    QPushButton*    m_abort;
-    QHBoxLayout*    m_firstRow;
-    QHBoxLayout*    m_secondRow;
-    QHBoxLayout*    m_thirdRow;
-    QHBoxLayout*    m_fourthRow;
-    QLineEdit*      m_name;
-    QSlider*        m_numberOfAxis;
-    QSpinBox*       m_tara;
-    QVBoxLayout*    m_mainLayout;
-    QList<QLabel*>  m_axis;
-    QLabel*         m_info1;
-    QLabel*         m_info2;
-};
-
 class DeleteVehicleDialog : public QDialog
 {
     Q_OBJECT;

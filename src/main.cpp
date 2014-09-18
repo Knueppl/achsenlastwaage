@@ -31,5 +31,11 @@ int main(int argc, char** argv)
     std::vector<Vehicle*> vehicles;
     database.getAllVehicles(vehicles);
 
+    Vehicle* vehicle = new Vehicle;
+    vehicle->setName("Eins");
+    vehicle->setTara(1000);
+    vehicle->setNumberOfAxis(4);
+    database.addVehicle(vehicle);
+
     return app.exec();
 }

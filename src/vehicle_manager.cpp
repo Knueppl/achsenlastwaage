@@ -1,6 +1,7 @@
 #include "vehicle_manager.h"
 #include "SupplierDialog.h"
 #include "ProductDialog.h"
+#include "CreateVehicleDialog.h"
 
 #include <QDebug>
 #include <QTextStream>
@@ -205,94 +206,6 @@ void VehicleManager::finishWeight(void)
 }
 
 
-
-
-CreateVehicleDialog::CreateVehicleDialog(VehicleManager* manager, QWidget* parent) : QDialog(parent)
-{
-    this->setWindowTitle("Fahrzeug hinzufügen");
-
-    m_mainLayout = new QVBoxLayout(this);
-    m_info1 = new QLabel("Bitte geben Sie den Fahrzeugnamen\nund die TARA ein.");
-    m_mainLayout->addWidget(m_info1);
-
-    m_firstRow = new QHBoxLayout;
-    m_name = new QLineEdit;
-    m_tara = new QSpinBox;
-    m_tara->setMaximum(99999);
-    m_firstRow->addWidget(m_name);
-    m_firstRow->addWidget(m_tara);
-    m_mainLayout->addLayout(m_firstRow);
-
-    m_info2 = new QLabel("\nund wählen Sie die Anzahl der Achsen.");
-    m_mainLayout->addWidget(m_info2);
-
-    m_secondRow = new QHBoxLayout;
-    m_numberOfAxis = new QSlider;
-    m_numberOfAxis->setMinimum(1);
-    m_numberOfAxis->setMaximum(5);
-    m_numberOfAxis->setOrientation(Qt::Horizontal);
-    m_numberOfAxis->setFixedWidth(100);
-    m_secondRow->addWidget(m_numberOfAxis);
-    m_mainLayout->addLayout(m_secondRow);
-
-    m_thirdRow = new QHBoxLayout;
-    for (int i = 0; i < 5; i++)
-    {
-        QLabel* tmp = new QLabel;
-        tmp->setPixmap(QPixmap("./picture/achse.png"));
-        tmp->setVisible(false);
-        m_axis.push_back(tmp);
-        m_thirdRow->addWidget(tmp);
-    }
-    m_mainLayout->addLayout(m_thirdRow);
-    this->updateAxis(1);
-
-    QFrame* frame = new QFrame;
-    frame->setFrameShape(QFrame::HLine);
-    m_mainLayout->addWidget(frame);
-    m_mainLayout->addStretch();
-
-    m_fourthRow = new QHBoxLayout;
-    m_accept = new QPushButton("OK");
-    m_abort = new QPushButton("Abbruch");
-    m_fourthRow->addWidget(m_accept);
-    m_fourthRow->addWidget(m_abort);
-    m_mainLayout->addLayout(m_fourthRow);
-
-    m_manager = manager;
-
-    connect(m_numberOfAxis, SIGNAL(valueChanged(int)), this, SLOT(updateAxis(int)));
-    connect(m_accept, SIGNAL(clicked()), this, SLOT(createVehicle()));
-    connect(m_abort, SIGNAL(clicked()), this, SLOT(reject()));
-}
-
-void CreateVehicleDialog::updateAxis(int value)
-{
-    for (int i = 0; i < m_axis.size(); i++)
-    {
-        if (i < value)
-        {
-            m_axis.at(i)->setVisible(true);
-        }
-        else
-        {
-            m_axis.at(i)->setVisible(false);
-        }
-    }
-}
-
-void CreateVehicleDialog::createVehicle(void)
-{
-    Vehicle* vehicle = new Vehicle();
-
-    vehicle->setName(m_name->text());
-    vehicle->setTara(m_tara->value());
-    vehicle->setNumberOfAxis(m_numberOfAxis->value());
-    vehicle->setButton(new QPushButton(m_name->text()));
-
-    m_manager->addVehicle(vehicle);
-    this->accept();
-}
 
 
 

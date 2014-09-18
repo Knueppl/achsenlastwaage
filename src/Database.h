@@ -16,6 +16,7 @@ public:
     void disconnect(void);
 
     void getAllVehicles(std::vector<Vehicle*>& vehicles);
+    void addVehicle(const Vehicle* vehicle);
 
 private:
     QSqlDatabase _database;
