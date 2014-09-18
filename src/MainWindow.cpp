@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
+#include "Button.h"
 
 MainWindow* MainWindow::_instance = 0;
 
@@ -15,4 +16,7 @@ MainWindow::MainWindow(void)
     : _ui(new Ui::MainWindow)
 {
     _ui->setupUi(this);
+
+    _scene.addItem(new Button);
+    _ui->_graphicsView->setScene(&_scene);
 }

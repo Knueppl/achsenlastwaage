@@ -24,6 +24,7 @@ set(MOC_HEADERS ${SRC_DIR}/axis_view.h
                 ${SRC_DIR}/SupplierDialog.h
                 ${SRC_DIR}/ProductDialog.h
                 ${SRC_DIR}/CreateVehicleDialog.h
+                ${SRC_DIR}/Button.h
                 )
 
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
@@ -48,6 +49,7 @@ set(SRC ${SRC_DIR}/axis_items.cpp
         ${SRC_DIR}/Database.cpp
         ${SRC_DIR}/CreateVehicleDialog.cpp
         ${SRC_DIR}/MainWindow.cpp
+        ${SRC_DIR}/Button.cpp
         ${MOC_SOURCES}
         ${MOC_FORMS}
         )
