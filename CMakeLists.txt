@@ -30,6 +30,7 @@ qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
 
 qt4_wrap_ui(MOC_FORMS
             ${FORM_DIR}/CreateVehicleDialog.ui
+            ${FORM_DIR}/MainWindow.ui
             )
 
 set(SRC ${SRC_DIR}/axis_items.cpp
@@ -46,6 +47,7 @@ set(SRC ${SRC_DIR}/axis_items.cpp
         ${SRC_DIR}/ProductDialog.cpp
         ${SRC_DIR}/Database.cpp
         ${SRC_DIR}/CreateVehicleDialog.cpp
+        ${SRC_DIR}/MainWindow.cpp
         ${MOC_SOURCES}
         ${MOC_FORMS}
         )

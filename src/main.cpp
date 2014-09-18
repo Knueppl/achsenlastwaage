@@ -1,41 +1,25 @@
-#include <Qt/QtGui>
-#include <QTextCodec>
+#include <QApplication>
 
-#include "control.h"
 #include "Database.h"
 #include "Vehicle.h"
+#include "MainWindow.h"
 
 const int size_x = 640;
 const int size_y = 640;
 
 int main(int argc, char** argv)
 {
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+//    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 
     QApplication app(argc, argv);
-    app.setStyleSheet("QGroupBox {"
-                      "border: 2px solid gray;"
-                      "border-radius: 3px;"
-                      "margin-top: 1ex }"
-                      "QGroupBox::title {"
-                      "subcontrol-origin: margin;"
-                      "subcontrol-position: top center;"
-                      "padding: 0 3px; }");
+//    Database database;
+//    database.connect("achsenlastwaage");
+//    std::vector<Vehicle*> vehicles;
+//    database.getAllVehicles(vehicles);
 
-    Control control;
-    control.resize(size_x, size_y);
-    control.show();
+    MainWindow* mw = MainWindow::instance();
 
-    Database database;
-    database.connect("achsenlastwaage");
-    std::vector<Vehicle*> vehicles;
-    database.getAllVehicles(vehicles);
-
-    Vehicle* vehicle = new Vehicle;
-    vehicle->setName("Eins");
-    vehicle->setTara(1000);
-    vehicle->setNumberOfAxis(4);
-    database.addVehicle(vehicle);
+    mw->show();
 
     return app.exec();
 }
