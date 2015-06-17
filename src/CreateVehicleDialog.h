@@ -16,6 +16,8 @@ class CreateVehicleDialog : public QDialog
 public:
     CreateVehicleDialog(QWidget* parent = 0);
 
+    Vehicle* vehicle(void) { return _vehicle; }
+
 private slots:
     void createVehicle(void);
 

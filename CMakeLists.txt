@@ -14,17 +14,10 @@ include_directories(${QT_QTSQL_INCLUDE_DIR}
                     ${CMAKE_CURRENT_BINARY_DIR}
                     )
 
-set(MOC_HEADERS ${SRC_DIR}/axis_view.h
-                ${SRC_DIR}/fzw12.h
-                ${SRC_DIR}/camera.h
-                ${SRC_DIR}/control.h
-                ${SRC_DIR}/plot_weights.h
-                ${SRC_DIR}/vehicle_manager.h
-                ${SRC_DIR}/weight_list.h
-                ${SRC_DIR}/SupplierDialog.h
+set(MOC_HEADERS ${SRC_DIR}/SupplierDialog.h
                 ${SRC_DIR}/ProductDialog.h
                 ${SRC_DIR}/CreateVehicleDialog.h
-                ${SRC_DIR}/Button.h
+                ${SRC_DIR}/MainWindow.h
                 )
 
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
@@ -34,22 +27,12 @@ qt4_wrap_ui(MOC_FORMS
             ${FORM_DIR}/MainWindow.ui
             )
 
-set(SRC ${SRC_DIR}/axis_items.cpp
-        ${SRC_DIR}/axis_view.cpp
-        ${SRC_DIR}/camera.cpp
-        ${SRC_DIR}/control.cpp
-        ${SRC_DIR}/fzw12.cpp
-        ${SRC_DIR}/main.cpp
-        ${SRC_DIR}/plot_weights.cpp
-        ${SRC_DIR}/vehicle_manager.cpp
-        ${SRC_DIR}/weight_list.cpp
-        ${SRC_DIR}/weight_note.cpp
-        ${SRC_DIR}/SupplierDialog.cpp
+set(SRC ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/ProductDialog.cpp
         ${SRC_DIR}/Database.cpp
         ${SRC_DIR}/CreateVehicleDialog.cpp
         ${SRC_DIR}/MainWindow.cpp
-        ${SRC_DIR}/Button.cpp
+        ${SRC_DIR}/achsenlastwaage.cpp
         ${MOC_SOURCES}
         ${MOC_FORMS}
         )

@@ -1,22 +1,47 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include "Button.h"
+#include "CreateVehicleDialog.h"
 
-MainWindow* MainWindow::_instance = 0;
+MainWindow* MainWindow::s_instance = 0;
 
 MainWindow* MainWindow::instance(void)
 {
-    if (!_instance)
-        _instance = new MainWindow;
+    if (!s_instance)
+        s_instance = new MainWindow;
 
-    return _instance;
+    return s_instance;
 }
 
 MainWindow::MainWindow(void)
-    : _ui(new Ui::MainWindow)
+    : QMainWindow(),
+      _ui(new Ui::MainWindow)
 {
     _ui->setupUi(this);
 
-    _scene.addItem(new Button);
-    _ui->_graphicsView->setScene(&_scene);
+    /* Create menus. */
+    QMenuBar* bar = this->menuBar();
+    QMenu* menu = bar->addMenu("Fahrzeuge");
+    _menuStartWeighting = menu->addMenu("Starte Wiegung");
+
+    menu->addAction("Hinzufügen", this, SLOT(addVehicle()));
+}
+
+MainWindow::~MainWindow(void)
+{
+
+}
+
+void MainWindow::addVehicle(void)
+{
+    CreateVehicleDialog dialog;
+
+    if (dialog.exec() != QDialog::Accepted)
+        return;
+
+    QAction* action = new QAction(dialog.vehicle()->name(), this);
+    QVariant data(QVariant::fromValue(dialog.vehicle()));
+
+    _vehicles.push_back(dialog.vehicle());
+    action->setData(data);
+    _menuStartWeighting->addAction(action);
 }

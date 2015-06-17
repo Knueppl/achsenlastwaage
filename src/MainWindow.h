@@ -2,7 +2,8 @@
 #define ___MAIN_WINDOW_H___
 
 #include <QMainWindow>
-#include <QGraphicsScene>
+
+class Vehicle;
 
 namespace Ui {
 class MainWindow;
@@ -10,17 +11,24 @@ class MainWindow;
 
 class MainWindow : public QMainWindow
 {
-public:
+    Q_OBJECT
 
+public:
     static MainWindow* instance(void);
 
 private:
     MainWindow(void);
+    virtual ~MainWindow(void);
 
     Ui::MainWindow* _ui;
-    QGraphicsScene _scene;
+    QVector<Vehicle*> _vehicles;
+    QVector<QAction*> _startWeighting;
+    QMenu* _menuStartWeighting;
 
-    static MainWindow* _instance;
+    static MainWindow* s_instance;
+
+private slots:
+    void addVehicle(void);
 };
 
 #endif

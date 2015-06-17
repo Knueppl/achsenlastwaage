@@ -29,6 +29,10 @@ struct Vehicle
     QAction*     m_action;
 };
 
+typedef Vehicle* VehiclePtr;
+
+Q_DECLARE_METATYPE(VehiclePtr);
+
 inline std::ostream& operator<<(std::ostream& os, const Vehicle& vehicle)
 {
     os << "Fahrzeug: " << vehicle.name().toUtf8().data() << ", TATA = " << vehicle.tara() << " mit "
