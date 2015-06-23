@@ -39,14 +39,7 @@ void Database::getAllVehicles(std::vector<Vehicle*>& vehicles)
     QSqlQuery query("SELECT id, name, achsen, achse_1, achse_2, achse_3, achse_4, achse_5 FROM fahrzeuge");
 
     while (query.next())
-    {
-        Vehicle* vehicle = new Vehicle;
-
-        vehicle->setName(query.value(1).toString());
-        vehicle->setNumberOfAxis(query.value(2).toInt());
-        vehicle->setTara(query.value(3).toInt());
-        vehicles.push_back(vehicle);
-    }
+        vehicles.push_back(new Vehicle(query.value(1).toString(), query.value(2).toInt(), query.value(3).toInt()));
 }
 
 void Database::addVehicle(const Vehicle* vehicle)

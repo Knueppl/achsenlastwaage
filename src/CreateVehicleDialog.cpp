@@ -10,8 +10,8 @@ CreateVehicleDialog::CreateVehicleDialog(QWidget* parent)
 {
     _ui->setupUi(this);
 
-    connect(_ui->_buttonAdd, SIGNAL(clicked()), this, SLOT(createVehicle()));
-    connect(_ui->_buttonCancel, SIGNAL(clicked()), this, SLOT(reject()));
+    this->connect(_ui->_buttonAdd, SIGNAL(clicked()), this, SLOT(createVehicle()));
+    this->connect(_ui->_buttonCancel, SIGNAL(clicked()), this, SLOT(reject()));
 }
 
 void CreateVehicleDialog::createVehicle(void)
@@ -33,11 +33,6 @@ void CreateVehicleDialog::createVehicle(void)
         return;
     }
 
-    _vehicle = new Vehicle;
-
-    _vehicle->_name = _ui->_editName->text();
-    _vehicle->_numberOfAxis = _ui->_spinAxes->value();
-    _vehicle->_tara = _ui->_spinTara->value();
-
+    _vehicle = new Vehicle(_ui->_editName->text(), _ui->_spinAxes->value(), _ui->_spinTara->value());
     this->accept();
 }

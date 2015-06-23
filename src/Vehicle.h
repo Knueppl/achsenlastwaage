@@ -7,26 +7,26 @@
 
 #include <ostream>
 
-struct Vehicle
+class Vehicle
 {
+public:
     Vehicle(void) : _numberOfAxis(0), _tara(0) { }
+    Vehicle(const QString& name, const int numberOfAxis, const int tara)
+        : _name(name),
+          _numberOfAxis(numberOfAxis),
+          _tara(tara)
+    {
 
-    void setName(const QString& name) { _name = name; }
-    void setNumberOfAxis(const int numberOfAxis) { _numberOfAxis = numberOfAxis; }
-    void setTara(const int tara) { _tara = tara; }
-    void setButton(QPushButton* button) { m_button = button; }
-    void setAction(QAction* action) { m_action = action; }
-    const QString& name(void) const { return _name; }
-    int numberOfAxis(void) const { return _numberOfAxis; }
-    int tara(void) const { return _tara; }
-    QPushButton* button(void) const { return m_button; }
-    QAction* action(void) const { return m_action; }
+    }
 
-    QString      _name;
-    int          _numberOfAxis;
-    int          _tara;
-    QPushButton* m_button;
-    QAction*     m_action;
+    const QString& name        (void) const { return _name;         }
+    int            numberOfAxis(void) const { return _numberOfAxis; }
+    int            tara        (void) const { return _tara;         }
+
+private:
+    QString _name;
+    int     _numberOfAxis;
+    int     _tara;
 };
 
 typedef Vehicle* VehiclePtr;
