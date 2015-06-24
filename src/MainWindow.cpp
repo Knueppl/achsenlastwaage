@@ -18,6 +18,10 @@ MainWindow::MainWindow(void)
 {
     _ui->setupUi(this);
 
+    /* Initialize the database. */
+    _database.connect("biogasernte2015");
+    _database.create();
+
     /* Create menus. */
     QMenuBar* bar = this->menuBar();
     QMenu* menu = bar->addMenu("Fahrzeuge");

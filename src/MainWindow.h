@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "Database.h"
+
 class Vehicle;
 
 namespace Ui {
@@ -21,6 +23,7 @@ private:
     virtual ~MainWindow(void);
 
     Ui::MainWindow* _ui;
+    Database _database;
     QVector<Vehicle*> _vehicles;
     QVector<QAction*> _startWeighting;
     QMenu* _menuStartWeighting;

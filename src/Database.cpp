@@ -15,14 +15,13 @@ bool Database::connect(const QString& database, const QString& address)
 {
     _database = QSqlDatabase::addDatabase("QMYSQL");
     _database.setHostName(address);
-    _database.setUserName("waage");
+    _database.setUserName("wiegemeister");
+    _database.setPassword("1234");
     _database.setDatabaseName(database);
 
     if (!_database.open())
     {
-        QMessageBox::critical(0, QObject::tr("Database Error"),
-                              _database.lastError().text());
-
+        QMessageBox::critical(0, QObject::tr("Database Error"), _database.lastError().text());
         return false;
     }
 
@@ -34,9 +33,37 @@ void Database::disconnect(void)
     _database.close();
 }
 
+void Database::create(void)
+{
+    QSqlQuery query("CREATE TABLE fahrzeuge ("
+                    "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+                    "name VARCHAR(100) NOT NULL,"
+                    "tara INT,"
+                    "achsen INT NOT NULL"
+                    ")");
+
+    if (!query.exec())
+        QMessageBox::critical(0, "Database Error", query.lastError().text());
+}
+
+void Database::save(const QString& fileName)
+{
+
+}
+
+void Database::load(const QString& fileName)
+{
+
+}
+
+void Database::drop(void)
+{
+
+}
+
 void Database::getAllVehicles(std::vector<Vehicle*>& vehicles)
 {
-    QSqlQuery query("SELECT id, name, achsen, achse_1, achse_2, achse_3, achse_4, achse_5 FROM fahrzeuge");
+    QSqlQuery query("SELECT id, name, achsen FROM fahrzeuge");
 
     while (query.next())
         vehicles.push_back(new Vehicle(query.value(1).toString(), query.value(2).toInt(), query.value(3).toInt()));
