@@ -18,6 +18,7 @@ set(MOC_HEADERS ${SRC_DIR}/SupplierDialog.h
                 ${SRC_DIR}/ProductDialog.h
                 ${SRC_DIR}/CreateVehicleDialog.h
                 ${SRC_DIR}/MainWindow.h
+                ${SRC_DIR}/DatabaseDialog.h
                 )
 
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
@@ -25,6 +26,7 @@ qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
 qt4_wrap_ui(MOC_FORMS
             ${FORM_DIR}/CreateVehicleDialog.ui
             ${FORM_DIR}/MainWindow.ui
+            ${FORM_DIR}/DatabaseDialog.ui
             )
 
 set(SRC ${SRC_DIR}/SupplierDialog.cpp
@@ -32,6 +34,7 @@ set(SRC ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/Database.cpp
         ${SRC_DIR}/CreateVehicleDialog.cpp
         ${SRC_DIR}/MainWindow.cpp
+        ${SRC_DIR}/DatabaseDialog.cpp
         ${SRC_DIR}/achsenlastwaage.cpp
         ${MOC_SOURCES}
         ${MOC_FORMS}

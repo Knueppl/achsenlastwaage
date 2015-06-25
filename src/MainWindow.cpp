@@ -2,6 +2,8 @@
 #include "ui_MainWindow.h"
 #include "CreateVehicleDialog.h"
 
+#include <QDebug>
+
 MainWindow* MainWindow::s_instance = 0;
 
 MainWindow* MainWindow::instance(void)
@@ -20,7 +22,7 @@ MainWindow::MainWindow(void)
 
     /* Initialize the database. */
     _database.connect("biogasernte2015");
-    _database.create();
+//    _database.create();
 
     /* Create menus. */
     QMenuBar* bar = this->menuBar();

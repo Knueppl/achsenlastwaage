@@ -14,6 +14,8 @@ public:
 
     bool connect(const QString& database, const QString& address = "localhost");
     void disconnect(void);
+    QVector<QString> databases(void);
+
     void create(void);
     void save(const QString& fileName);
     void load(const QString& fileName);

@@ -5,6 +5,8 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QDebug>
+#include <QFile>
+#include <QTextStream>
 
 Database::Database(void)
 {
@@ -13,6 +15,8 @@ Database::Database(void)
 
 bool Database::connect(const QString& database, const QString& address)
 {
+    this->disconnect();
+
     _database = QSqlDatabase::addDatabase("QMYSQL");
     _database.setHostName(address);
     _database.setUserName("wiegemeister");
@@ -33,14 +37,27 @@ void Database::disconnect(void)
     _database.close();
 }
 
+QVector<QString> Database::databases(void)
+{
+    QSqlQuery query("SHOW DATABASES", _database);
+    QVector<QString> bases;
+
+    while (query.next())
+        bases.push_back(query.value(0).toString());
+
+    return bases;
+}
+
 void Database::create(void)
 {
-    QSqlQuery query("CREATE TABLE fahrzeuge ("
-                    "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
-                    "name VARCHAR(100) NOT NULL,"
-                    "tara INT,"
-                    "achsen INT NOT NULL"
-                    ")");
+    QSqlQuery query(_database);
+
+    query.prepare("CREATE TABLE fahrzeuge ("
+                  "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+                  "name VARCHAR(100) NOT NULL,"
+                  "tara INT,"
+                  "achsen INT NOT NULL"
+                  ")");
 
     if (!query.exec())
         QMessageBox::critical(0, "Database Error", query.lastError().text());
@@ -48,7 +65,27 @@ void Database::create(void)
 
 void Database::save(const QString& fileName)
 {
+    QSqlQuery query(_database);
+    QFile file(fileName);
 
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox::critical(0,
+                              "Database Error",
+                              QString("Kann die Datei ") + fileName + QString(" nicht öffnen."));
+        return;
+    }
+
+    QTextStream out(&file);
+
+    query.prepare("SELECT id, name, tara, achsen FROM fahrzeuge");
+    out << "Fahrzeuge:\n";
+
+    while (query.next())
+    {
+        out << query.value(0).toString() << "; " << query.value(1).toString() << "; "
+            << query.value(2).toString() << "; " << query.value(3).toString() << "\n";
+    }
 }
 
 void Database::load(const QString& fileName)
