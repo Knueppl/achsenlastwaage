@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "CreateVehicleDialog.h"
+#include "DatabaseDialog.h"
 
 #include <QDebug>
 
@@ -28,8 +29,10 @@ MainWindow::MainWindow(void)
     QMenuBar* bar = this->menuBar();
     QMenu* menu = bar->addMenu("Fahrzeuge");
     _menuStartWeighting = menu->addMenu("Starte Wiegung");
-
     menu->addAction("Hinzufügen", this, SLOT(addVehicle()));
+
+    menu = bar->addMenu("Datenbank");
+    menu->addAction("Auswählen", this, SLOT(selectDatabase()));
 }
 
 MainWindow::~MainWindow(void)
@@ -50,4 +53,10 @@ void MainWindow::addVehicle(void)
     _vehicles.push_back(dialog.vehicle());
     action->setData(data);
     _menuStartWeighting->addAction(action);
+}
+
+void MainWindow::selectDatabase(void)
+{
+    DatabaseDialog dialog(_database, this);
+    dialog.exec();
 }

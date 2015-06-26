@@ -21,6 +21,18 @@ bool Database::connect(const QString& database, const QString& address)
     _database.setHostName(address);
     _database.setUserName("wiegemeister");
     _database.setPassword("1234");
+
+    return this->selectDatabase(database);
+}
+
+void Database::disconnect(void)
+{
+    _database.close();
+}
+
+bool Database::selectDatabase(const QString& database)
+{
+    _database.close();
     _database.setDatabaseName(database);
 
     if (!_database.open())
@@ -28,13 +40,6 @@ bool Database::connect(const QString& database, const QString& address)
         QMessageBox::critical(0, QObject::tr("Database Error"), _database.lastError().text());
         return false;
     }
-
-    return true;
-}
-
-void Database::disconnect(void)
-{
-    _database.close();
 }
 
 QVector<QString> Database::databases(void)
@@ -48,9 +53,16 @@ QVector<QString> Database::databases(void)
     return bases;
 }
 
-void Database::create(void)
+void Database::createDatabase(const QString& database)
 {
     QSqlQuery query(_database);
+
+    query.prepare(QString("CREATE DATABASE ") + database);
+
+    if (!query.exec())
+        QMessageBox::critical(0, "Database Error", query.lastError().text());
+
+    this->selectDatabase(database);
 
     query.prepare("CREATE TABLE fahrzeuge ("
                   "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
@@ -100,7 +112,7 @@ void Database::drop(void)
 
 void Database::getAllVehicles(std::vector<Vehicle*>& vehicles)
 {
-    QSqlQuery query("SELECT id, name, achsen FROM fahrzeuge");
+    QSqlQuery query("SELECT id, name, achsen FROM fahrzeuge", _database);
 
     while (query.next())
         vehicles.push_back(new Vehicle(query.value(1).toString(), query.value(2).toInt(), query.value(3).toInt()));
@@ -108,7 +120,7 @@ void Database::getAllVehicles(std::vector<Vehicle*>& vehicles)
 
 void Database::addVehicle(const Vehicle* vehicle)
 {
-    QSqlQuery query;
+    QSqlQuery query(_database);
 
     query.prepare("INSERT INTO fahrzeuge (name, tara, achsen) VALUES (?, ?, ?)");
     query.bindValue(0, vehicle->name());

@@ -27,6 +27,7 @@ qt4_wrap_ui(MOC_FORMS
             ${FORM_DIR}/CreateVehicleDialog.ui
             ${FORM_DIR}/MainWindow.ui
             ${FORM_DIR}/DatabaseDialog.ui
+            ${FORM_DIR}/CreateDatabaseDialog.ui
             )
 
 set(SRC ${SRC_DIR}/SupplierDialog.cpp
@@ -35,6 +36,7 @@ set(SRC ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/CreateVehicleDialog.cpp
         ${SRC_DIR}/MainWindow.cpp
         ${SRC_DIR}/DatabaseDialog.cpp
+        ${SRC_DIR}/CreateDatabaseDialog.cpp
         ${SRC_DIR}/achsenlastwaage.cpp
         ${MOC_SOURCES}
         ${MOC_FORMS}

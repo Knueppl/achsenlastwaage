@@ -20,6 +20,8 @@ private slots:
     void chooseDatabase(void);
 
 private:
+    void showDatabases(void);
+
     Ui::DatabaseDialog* _ui;
     Database& _database;
 };

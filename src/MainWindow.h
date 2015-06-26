@@ -32,6 +32,7 @@ private:
 
 private slots:
     void addVehicle(void);
+    void selectDatabase(void);
 };
 
 #endif
