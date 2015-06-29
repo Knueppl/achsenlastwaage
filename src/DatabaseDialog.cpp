@@ -10,15 +10,18 @@ DatabaseDialog::DatabaseDialog(Database& database, QWidget* parent)
     _ui->setupUi(this);
 
     _ui->_pushAccept->setDefault(true);
-    this->connect(_ui->_pushAccept, SIGNAL(clicked()), this, SLOT(accept()));
-    this->connect(_ui->_pushAccept, SIGNAL(clicked()), this, SLOT(chooseDatabase()));
-    this->connect(_ui->_pushCancel, SIGNAL(clicked()), this, SLOT(reject()));
     this->showDatabases();
+    this->connect(_ui->_pushAccept, SIGNAL(clicked()), this, SLOT(accept()));
+    this->connect(_ui->_comboDatabases, SIGNAL(currentIndexChanged(int)), this, SLOT(chooseDatabase(int)));
+    this->connect(_ui->_pushCancel, SIGNAL(clicked()), this, SLOT(reject()));
 }
 
-void DatabaseDialog::chooseDatabase(void)
+void DatabaseDialog::chooseDatabase(int index)
 {
-    if (!_ui->_comboDatabases->currentIndex())
+    if (index < 0)
+        return;
+
+    if (index == _ui->_comboDatabases->count() - 1)
     {
         CreateDatabaseDialog dialog(this);
 
@@ -29,7 +32,6 @@ void DatabaseDialog::chooseDatabase(void)
 
             _database.createDatabase(dialog.databaseName());
             this->showDatabases();
-            _ui->_comboDatabases->setCurrentIndex(_ui->_comboDatabases->count());
             _database.selectDatabase(_ui->_comboDatabases->currentText());
         }
 
@@ -41,12 +43,16 @@ void DatabaseDialog::chooseDatabase(void)
 
 void DatabaseDialog::showDatabases(void)
 {
+    this->disconnect(_ui->_comboDatabases, SIGNAL(currentIndexChanged(int)), this, SLOT(chooseDatabase(int)));
     _ui->_comboDatabases->clear();
-    _ui->_comboDatabases->addItem("Erstelle neue Datenbank");
 
     _database.selectDatabase("information_schema");
     QVector<QString> databases(_database.databases());
 
     for (QVector<QString>::const_iterator it(databases.begin()); it < databases.end(); ++it)
         _ui->_comboDatabases->addItem(*it);
+
+    _ui->_comboDatabases->addItem("Erstelle neue Datenbank");
+    _ui->_comboDatabases->setCurrentIndex(0);
+    this->connect(_ui->_comboDatabases, SIGNAL(currentIndexChanged(int)), this, SLOT(chooseDatabase(int)));
 }

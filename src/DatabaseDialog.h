@@ -17,7 +17,7 @@ public:
     DatabaseDialog(Database& database, QWidget* parent = 0);
 
 private slots:
-    void chooseDatabase(void);
+    void chooseDatabase(int index);
 
 private:
     void showDatabases(void);
