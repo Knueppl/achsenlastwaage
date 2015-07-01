@@ -10,20 +10,38 @@
 class Vehicle
 {
 public:
-    Vehicle(void) : _numberOfAxis(0), _tara(0) { }
+    Vehicle(void)
+        : _id(-1),
+          _name("unkown"),
+          _numberOfAxis(0),
+          _tara(0)
+    {
+
+    }
     Vehicle(const QString& name, const int numberOfAxis, const int tara)
-        : _name(name),
+        : _id(-1),
+          _name(name),
+          _numberOfAxis(numberOfAxis),
+          _tara(tara)
+    {
+
+    }
+    Vehicle(const int id, const QString& name, const int numberOfAxis, const int tara)
+        : _id(id),
+          _name(name),
           _numberOfAxis(numberOfAxis),
           _tara(tara)
     {
 
     }
 
+    int            id          (void) const { return _id;           }
     const QString& name        (void) const { return _name;         }
     int            numberOfAxis(void) const { return _numberOfAxis; }
     int            tara        (void) const { return _tara;         }
 
 private:
+    int     _id;
     QString _name;
     int     _numberOfAxis;
     int     _tara;

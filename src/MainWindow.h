@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "Database.h"
+#include "DummyScale.h"
 
 class Vehicle;
 
@@ -22,8 +23,12 @@ private:
     MainWindow(void);
     virtual ~MainWindow(void);
 
+    void getAllVehiclesFromDatabase(void);
+
     Ui::MainWindow* _ui;
     Database _database;
+    Scale* _scale;
+
     QVector<Vehicle*> _vehicles;
     QVector<QAction*> _startWeighting;
     QMenu* _menuStartWeighting;

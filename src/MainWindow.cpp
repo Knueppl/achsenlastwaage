@@ -17,12 +17,13 @@ MainWindow* MainWindow::instance(void)
 
 MainWindow::MainWindow(void)
     : QMainWindow(),
-      _ui(new Ui::MainWindow)
+      _ui(new Ui::MainWindow),
+      _scale(new DummyScale)
 {
     _ui->setupUi(this);
 
     /* Initialize the database. */
-    _database.connect("biogasernte2015");
+//    _database.connect("biogasernte2015");
 //    _database.create();
 
     /* Create menus. */
@@ -40,6 +41,24 @@ MainWindow::~MainWindow(void)
 
 }
 
+void MainWindow::getAllVehiclesFromDatabase(void)
+{
+    qDeleteAll(_vehicles);
+    _vehicles.clear();
+    _menuStartWeighting->clear();
+    _database.getAllVehicles(_vehicles);
+
+    for (QVector<Vehicle*>::const_iterator vehicle(_vehicles.begin()); vehicle < _vehicles.end(); ++vehicle)
+    {
+        // To do: connect the action with start weighting slot.
+        QAction* action = new QAction((**vehicle).name(), _menuStartWeighting);
+        QVariant data(QVariant::fromValue(*vehicle));
+
+        action->setData(data);
+        _menuStartWeighting->addAction(action);
+    }
+}
+
 void MainWindow::addVehicle(void)
 {
     CreateVehicleDialog dialog;
@@ -47,10 +66,12 @@ void MainWindow::addVehicle(void)
     if (dialog.exec() != QDialog::Accepted)
         return;
 
-    QAction* action = new QAction(dialog.vehicle()->name(), this);
+    // To do: connect the action with start weighting slot.
+    QAction* action = new QAction(dialog.vehicle()->name(), _menuStartWeighting);
     QVariant data(QVariant::fromValue(dialog.vehicle()));
 
     _vehicles.push_back(dialog.vehicle());
+    _database.addVehicle(dialog.vehicle());
     action->setData(data);
     _menuStartWeighting->addAction(action);
 }
@@ -59,4 +80,5 @@ void MainWindow::selectDatabase(void)
 {
     DatabaseDialog dialog(_database, this);
     dialog.exec();
+    this->getAllVehiclesFromDatabase();
 }

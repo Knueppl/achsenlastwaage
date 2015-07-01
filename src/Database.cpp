@@ -10,7 +10,7 @@
 
 Database::Database(void)
 {
-
+    this->connect("information_schema");
 }
 
 bool Database::connect(const QString& database, const QString& address)
@@ -110,12 +110,17 @@ void Database::drop(void)
 
 }
 
-void Database::getAllVehicles(std::vector<Vehicle*>& vehicles)
+void Database::getAllVehicles(QVector<Vehicle*>& vehicles)
 {
-    QSqlQuery query("SELECT id, name, achsen FROM fahrzeuge", _database);
+    QSqlQuery query("SELECT id, name, achsen, tara FROM fahrzeuge", _database);
 
     while (query.next())
-        vehicles.push_back(new Vehicle(query.value(1).toString(), query.value(2).toInt(), query.value(3).toInt()));
+    {
+        vehicles.push_back(new Vehicle(query.value(0).toInt(),
+                                       query.value(1).toString(),
+                                       query.value(2).toInt(),
+                                       query.value(3).toInt()));
+    }
 }
 
 void Database::addVehicle(const Vehicle* vehicle)

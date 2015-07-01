@@ -1,8 +1,7 @@
 #ifndef ___DATABASE_H___
 #define ___DATABASE_H___
 
-#include <vector>
-
+#include <QVector>
 #include <QSqlDatabase>
 
 class Vehicle;
@@ -22,7 +21,7 @@ public:
     void load(const QString& fileName);
     void drop(void);
 
-    void getAllVehicles(std::vector<Vehicle*>& vehicles);
+    void getAllVehicles(QVector<Vehicle*>& vehicles);
     void addVehicle(const Vehicle* vehicle);
 
 private:
