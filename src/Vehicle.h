@@ -13,37 +13,37 @@ public:
     Vehicle(void)
         : _id(-1),
           _name("unkown"),
-          _numberOfAxis(0),
+          _axes(0),
           _tara(0)
     {
 
     }
-    Vehicle(const QString& name, const int numberOfAxis, const int tara)
+    Vehicle(const QString& name, const int axes, const int tara)
         : _id(-1),
           _name(name),
-          _numberOfAxis(numberOfAxis),
+          _axes(axes),
           _tara(tara)
     {
 
     }
-    Vehicle(const int id, const QString& name, const int numberOfAxis, const int tara)
+    Vehicle(const int id, const QString& name, const int axes, const int tara)
         : _id(id),
           _name(name),
-          _numberOfAxis(numberOfAxis),
+          _axes(axes),
           _tara(tara)
     {
 
     }
 
-    int            id          (void) const { return _id;           }
-    const QString& name        (void) const { return _name;         }
-    int            numberOfAxis(void) const { return _numberOfAxis; }
-    int            tara        (void) const { return _tara;         }
+    int            id  (void) const { return _id;  }
+    const QString& name(void) const { return _name;}
+    int            axes(void) const { return _axes;}
+    int            tara(void) const { return _tara;}
 
 private:
     int     _id;
     QString _name;
-    int     _numberOfAxis;
+    int     _axes;
     int     _tara;
 };
 

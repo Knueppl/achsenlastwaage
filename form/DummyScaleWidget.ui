@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>207</width>
-    <height>51</height>
+    <width>209</width>
+    <height>127</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,25 +19,52 @@
   <property name="windowTitle">
    <string>Test Waage</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QSpinBox" name="spinBox">
-     <property name="maximum">
-      <number>99999</number>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QSpinBox" name="_spinWeight">
+       <property name="maximum">
+        <number>99999</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>kg</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="_pushSend">
+       <property name="text">
+        <string>Senden</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="_pushAbbort">
+     <property name="text">
+      <string>Abbrechen</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QPushButton" name="_pushClose">
      <property name="text">
-      <string>kg</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="_pushSend">
-     <property name="text">
-      <string>Send</string>
+      <string>Schließen</string>
      </property>
     </widget>
    </item>

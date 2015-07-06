@@ -5,6 +5,7 @@
 
 #include "Database.h"
 #include "DummyScale.h"
+#include "DummyScaleWidget.h"
 
 class Vehicle;
 
@@ -28,6 +29,7 @@ private:
     Ui::MainWindow* _ui;
     Database _database;
     Scale* _scale;
+    DummyScaleWidget* _scaleWidget;
 
     QVector<Vehicle*> _vehicles;
     QVector<QAction*> _startWeighting;
@@ -38,6 +40,7 @@ private:
 private slots:
     void addVehicle(void);
     void selectDatabase(void);
+    void startWeighting(void);
 };
 
 #endif

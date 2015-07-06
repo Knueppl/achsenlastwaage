@@ -21,6 +21,7 @@ set(MOC_HEADERS ${SRC_DIR}/SupplierDialog.h
                 ${SRC_DIR}/DatabaseDialog.h
                 ${SRC_DIR}/Scale.h
                 ${SRC_DIR}/DummyScale.h
+                ${SRC_DIR}/DummyScaleWidget.h
                 )
 
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
@@ -40,8 +41,10 @@ set(SRC ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/MainWindow.cpp
         ${SRC_DIR}/DatabaseDialog.cpp
         ${SRC_DIR}/CreateDatabaseDialog.cpp
+        ${SRC_DIR}/Scale.cpp
         ${SRC_DIR}/DummyScale.cpp
         ${SRC_DIR}/DummyScaleWidget.cpp
+        ${SRC_DIR}/Weighting.cpp
         ${SRC_DIR}/achsenlastwaage.cpp
         ${MOC_SOURCES}
         ${MOC_FORMS}

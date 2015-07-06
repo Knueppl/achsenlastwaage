@@ -1,5 +1,7 @@
 #include "DummyScale.h"
 
+#include <QDebug>
+
 DummyScale::DummyScale(void)
     : Scale()
 {
@@ -11,12 +13,8 @@ DummyScale::~DummyScale(void)
 
 }
 
-void DummyScale::start(const Vehicle* vehicle)
+void DummyScale::receiveAxisWeight(const int kg)
 {
-
+    this->setNextAxisWeight(kg);
 }
 
-void DummyScale::cancel(void)
-{
-
-}

@@ -12,11 +12,7 @@ public:
     virtual ~DummyScale(void);
 
 public slots:
-    virtual void start(const Vehicle* vehicle);
-    virtual void cancel(void);
-
-signals:
-    virtual void finished(Weight* weight);
+    void receiveAxisWeight(const int kg);
 };
 
 #endif

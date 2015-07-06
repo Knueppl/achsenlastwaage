@@ -34,6 +34,10 @@ MainWindow::MainWindow(void)
 
     menu = bar->addMenu("Datenbank");
     menu->addAction("Auswählen", this, SLOT(selectDatabase()));
+
+    // For debugging.
+    _scaleWidget = new DummyScaleWidget(_scale);
+    _scaleWidget->show();
 }
 
 MainWindow::~MainWindow(void)
@@ -54,6 +58,7 @@ void MainWindow::getAllVehiclesFromDatabase(void)
         QAction* action = new QAction((**vehicle).name(), _menuStartWeighting);
         QVariant data(QVariant::fromValue(*vehicle));
 
+        this->connect(action, SIGNAL(triggered()), this, SLOT(startWeighting()));
         action->setData(data);
         _menuStartWeighting->addAction(action);
     }
@@ -81,4 +86,26 @@ void MainWindow::selectDatabase(void)
     DatabaseDialog dialog(_database, this);
     dialog.exec();
     this->getAllVehiclesFromDatabase();
+}
+
+void MainWindow::startWeighting(void)
+{
+    qDebug() << __PRETTY_FUNCTION__;
+    QAction* action = qobject_cast<QAction*>(this->sender());
+
+    if (!action)
+    {
+        qDebug() << __PRETTY_FUNCTION__ << ": !action --> return";
+        return;
+    }
+
+    Vehicle* vehicle = dynamic_cast<Vehicle*>(action->data().value<Vehicle*>());
+
+    if (!vehicle)
+    {
+        qDebug() << __PRETTY_FUNCTION__ << ": !vehicle --> return";
+        return;
+    }
+
+    _scale->start(vehicle);
 }

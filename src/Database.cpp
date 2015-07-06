@@ -112,7 +112,14 @@ void Database::drop(void)
 
 void Database::getAllVehicles(QVector<Vehicle*>& vehicles)
 {
-    QSqlQuery query("SELECT id, name, achsen, tara FROM fahrzeuge", _database);
+    QSqlQuery query(_database);
+
+    query.prepare("SELECT id, name, achsen, tara FROM fahrzeuge");
+
+    if (!query.exec())
+    {
+        QMessageBox::critical(0, "Database Error", "Kann die Fahrzeug nicht aus der Datenbank lesen.");
+    }
 
     while (query.next())
     {

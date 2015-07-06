@@ -3,23 +3,32 @@
 
 #include <QObject>
 
+#include "Weighting.h"
+
 class Vehicle;
-class Weight;
 
 class Scale : public QObject
 {
     Q_OBJECT
 
 public:
-    Scale(void) : QObject() { }
+    Scale(void) : QObject(), _vehicle(0) { }
     virtual ~Scale(void) { }
 
 public slots:
-    virtual void start(const Vehicle* vehicle) = 0;
-    virtual void cancel(void) = 0;
+    virtual void start(const Vehicle* vehicle);
+    virtual void cancel(void);
 
 signals:
-    virtual void finished(Weight* weight) = 0;
+    void finished(Weighting* weight);
+    void started(void);
+
+protected:
+    void setNextAxisWeight(const int kg);
+
+private:
+    const Vehicle* _vehicle;
+    Weighting _weighting;
 };
 
 #endif
