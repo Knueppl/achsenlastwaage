@@ -38,6 +38,7 @@ MainWindow::MainWindow(void)
     // For debugging.
     _scaleWidget = new DummyScaleWidget(_scale);
     _scaleWidget->show();
+    this->connect(_scale, SIGNAL(finished(Weighting*)), this, SLOT(stopWeighting(Weighting*)));
 }
 
 MainWindow::~MainWindow(void)
@@ -107,5 +108,16 @@ void MainWindow::startWeighting(void)
         return;
     }
 
+    _menuStartWeighting->setDisabled(true);
     _scale->start(vehicle);
+}
+
+void MainWindow::stopWeighting(Weighting* weighting)
+{
+    _menuStartWeighting->setEnabled(true);
+
+    if (weighting)
+    {
+
+    }
 }

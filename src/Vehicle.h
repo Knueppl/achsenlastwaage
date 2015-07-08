@@ -54,7 +54,7 @@ Q_DECLARE_METATYPE(VehiclePtr);
 inline std::ostream& operator<<(std::ostream& os, const Vehicle& vehicle)
 {
     os << "Fahrzeug: " << vehicle.name().toUtf8().data() << ", TATA = " << vehicle.tara() << " mit "
-       << vehicle.numberOfAxis() << " Achsen";
+       << vehicle.axes() << " Achsen";
 
     return os;
 }

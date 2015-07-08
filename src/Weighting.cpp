@@ -28,7 +28,7 @@ void Weighting::clear(void)
 
 bool Weighting::valid(void) const
 {
-    return _finished && _weight.size() >= _vehicle->axes();
+    return _finished && _weights.size() >= _vehicle->axes();
 }
 
 Weighting& Weighting::operator<<(const int kg)

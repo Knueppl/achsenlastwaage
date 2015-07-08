@@ -41,6 +41,7 @@ private slots:
     void addVehicle(void);
     void selectDatabase(void);
     void startWeighting(void);
+    void stopWeighting(Weighting*);
 };
 
 #endif

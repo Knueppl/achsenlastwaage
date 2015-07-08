@@ -55,6 +55,7 @@ QVector<QString> Database::databases(void)
 
 void Database::createDatabase(const QString& database)
 {
+    // Create a new database itself.
     QSqlQuery query(_database);
 
     query.prepare(QString("CREATE DATABASE ") + database);
@@ -64,6 +65,8 @@ void Database::createDatabase(const QString& database)
 
     this->selectDatabase(database);
 
+
+    // Create the table vehicles.
     query.prepare("CREATE TABLE fahrzeuge ("
                   "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
                   "name VARCHAR(100) NOT NULL,"
@@ -73,6 +76,18 @@ void Database::createDatabase(const QString& database)
 
     if (!query.exec())
         QMessageBox::critical(0, "Database Error", query.lastError().text());
+
+    // Create the table weightings.
+    query.prepare("CREATE TABLE wiegungen ("
+                  "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+                  "name VARCHAR(100) NOT NULL,"
+                  "tara INT,"
+                  "achsen INT NOT NULL"
+                  ")");
+
+    if (!query.exec())
+        QMessageBox::critical(0, "Database Error", query.lastError().text());
+
 }
 
 void Database::save(const QString& fileName)
@@ -137,7 +152,7 @@ void Database::addVehicle(const Vehicle* vehicle)
     query.prepare("INSERT INTO fahrzeuge (name, tara, achsen) VALUES (?, ?, ?)");
     query.bindValue(0, vehicle->name());
     query.bindValue(1, vehicle->tara());
-    query.bindValue(2, vehicle->numberOfAxis());
+    query.bindValue(2, vehicle->axes());
 
     if (!query.exec())
     {
