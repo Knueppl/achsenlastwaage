@@ -77,17 +77,37 @@ void Database::createDatabase(const QString& database)
     if (!query.exec())
         QMessageBox::critical(0, "Database Error", query.lastError().text());
 
-    // Create the table weightings.
-    query.prepare("CREATE TABLE wiegungen ("
+
+    // Create the table goods.
+    query.prepare("CREATE TABLE waren ("
                   "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
-                  "name VARCHAR(100) NOT NULL,"
-                  "tara INT,"
-                  "achsen INT NOT NULL"
+                  "name VARCHAR(100) NOT NULL UNIQUE"
                   ")");
 
     if (!query.exec())
         QMessageBox::critical(0, "Database Error", query.lastError().text());
 
+
+    // Create the table supplier.
+    query.prepare("CREATE TABLE lieferanten ("
+                  "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+                  "name VARCHAR(100) NOT NULL UNIQUE"
+                  ")");
+
+    if (!query.exec())
+        QMessageBox::critical(0, "Database Error", query.lastError().text());
+
+
+    // Create the table weighting
+    query.prepare("CREATE TABLE wiegungen ("
+                  "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+                  "date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+                  "brutto INT,"
+                  "netto INT"
+                  ")");
+
+    if (!query.exec())
+        QMessageBox::critical(0, "Database Error", query.lastError().text());
 }
 
 void Database::save(const QString& fileName)
