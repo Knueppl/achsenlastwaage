@@ -1,9 +1,9 @@
-#include "CreateDatabaseDialog.h"
-#include "ui_CreateDatabaseDialog.h"
+#include "CreateTextDialog.h"
+#include "ui_CreateTextDialog.h"
 
-CreateDatabaseDialog::CreateDatabaseDialog(QWidget* parent)
+CreateTextDialog::CreateTextDialog(QWidget* parent)
     : QDialog(parent),
-      _ui(new Ui::CreateDatabaseDialog)
+      _ui(new Ui::CreateTextDialog)
 {
     _ui->setupUi(this);
     _ui->_pushAccept->setDefault(true);
@@ -12,7 +12,7 @@ CreateDatabaseDialog::CreateDatabaseDialog(QWidget* parent)
     this->connect(_ui->_pushCancel, SIGNAL(clicked()), this, SLOT(reject()));
 }
 
-QString CreateDatabaseDialog::databaseName(void) const
+QString CreateTextDialog::databaseName(void) const
 {
     return _ui->_lineName->text();
 }

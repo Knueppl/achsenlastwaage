@@ -1,6 +1,6 @@
 #include "DatabaseDialog.h"
 #include "ui_DatabaseDialog.h"
-#include "CreateDatabaseDialog.h"
+#include "CreateTextDialog.h"
 
 DatabaseDialog::DatabaseDialog(Database& database, QWidget* parent)
     : QDialog(parent),
@@ -23,7 +23,7 @@ void DatabaseDialog::chooseDatabase(int index)
 
     if (index == _ui->_comboDatabases->count() - 1)
     {
-        CreateDatabaseDialog dialog(this);
+        CreateTextDialog dialog(this);
 
         if (dialog.exec() == QDialog::Accepted)
         {

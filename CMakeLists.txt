@@ -30,7 +30,7 @@ qt4_wrap_ui(MOC_FORMS
             ${FORM_DIR}/CreateVehicleDialog.ui
             ${FORM_DIR}/MainWindow.ui
             ${FORM_DIR}/DatabaseDialog.ui
-            ${FORM_DIR}/CreateDatabaseDialog.ui
+            ${FORM_DIR}/CreateTextDialog.ui
             ${FORM_DIR}/DummyScaleWidget.ui
             )
 
@@ -40,7 +40,7 @@ set(SRC ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/CreateVehicleDialog.cpp
         ${SRC_DIR}/MainWindow.cpp
         ${SRC_DIR}/DatabaseDialog.cpp
-        ${SRC_DIR}/CreateDatabaseDialog.cpp
+        ${SRC_DIR}/CreateTextDialog.cpp
         ${SRC_DIR}/Scale.cpp
         ${SRC_DIR}/DummyScale.cpp
         ${SRC_DIR}/DummyScaleWidget.cpp

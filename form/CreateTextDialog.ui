@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CreateDatabaseDialog</class>
- <widget class="QDialog" name="CreateDatabaseDialog">
+ <class>CreateTextDialog</class>
+ <widget class="QDialog" name="CreateTextDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="_labelInfo">
      <property name="text">
       <string>Bitte geben Sie einen Namen für die zu erstellende Datenbank ein.</string>
      </property>
