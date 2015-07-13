@@ -24,6 +24,9 @@ public:
     void getAllVehicles(QVector<Vehicle*>& vehicles);
     void addVehicle(const Vehicle* vehicle);
 
+    void getAllGoods(QVector<QString>& goods);
+    void addGood(const QString& good);
+
 private:
     QSqlDatabase _database;
 };

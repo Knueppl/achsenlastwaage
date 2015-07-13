@@ -179,3 +179,31 @@ void Database::addVehicle(const Vehicle* vehicle)
         QMessageBox::critical(0, "Database Error", "Kann das Fahrzeug nicht zur Datenbank hinzufügen.");
     }
 }
+
+void Database::getAllGoods(QVector<QString>& goods)
+{
+    QSqlQuery query(_database);
+
+    query.prepare("SELECT name from waren");
+
+    if (!query.exec())
+    {
+        QMessageBox::critical(0, "Database Error", "Kann die Waren nicht aus der Datenbank lesen.");
+    }
+
+    while (query.next())
+        goods.push_back(query.value(0).toString());
+}
+
+void Database::addGood(const QString& good)
+{
+    QSqlQuery query(_database);
+
+    query.prepare("INSERT INTO waren (name) VALUES (?)");
+    query.bindValue(0, good);
+
+    if (!query.exec())
+    {
+        QMessageBox::critical(0, "Database Error", "Kann die Ware nicht zur Datenbank hinzufügen.");
+    }
+}
