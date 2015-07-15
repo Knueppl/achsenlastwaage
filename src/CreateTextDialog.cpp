@@ -12,7 +12,7 @@ CreateTextDialog::CreateTextDialog(QWidget* parent)
     this->connect(_ui->_pushCancel, SIGNAL(clicked()), this, SLOT(reject()));
 }
 
-QString CreateTextDialog::databaseName(void) const
+QString CreateTextDialog::text(void) const
 {
     return _ui->_lineName->text();
 }

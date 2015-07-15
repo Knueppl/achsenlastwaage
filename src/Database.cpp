@@ -108,6 +108,14 @@ void Database::createDatabase(const QString& database)
 
     if (!query.exec())
         QMessageBox::critical(0, "Database Error", query.lastError().text());
+
+
+    // Add some default goods.
+    this->addGood("Mais");
+    this->addGood("Triticale");
+
+    // Add a default supplier.
+    this->addSupplier("Merkl");
 }
 
 void Database::save(const QString& fileName)
@@ -184,6 +192,7 @@ void Database::getAllGoods(QVector<QString>& goods)
 {
     QSqlQuery query(_database);
 
+    goods.clear();
     query.prepare("SELECT name from waren");
 
     if (!query.exec())
@@ -205,5 +214,34 @@ void Database::addGood(const QString& good)
     if (!query.exec())
     {
         QMessageBox::critical(0, "Database Error", "Kann die Ware nicht zur Datenbank hinzufügen.");
+    }
+}
+
+void Database::getAllSuppliers(QVector<QString>& suppliers)
+{
+    QSqlQuery query(_database);
+
+    suppliers.clear();
+    query.prepare("SELECT name from lieferanten");
+
+    if (!query.exec())
+    {
+        QMessageBox::critical(0, "Database Error", "Kann die Lieferanten nicht aus der Datenbank lesen.");
+    }
+
+    while (query.next())
+        suppliers.push_back(query.value(0).toString());
+}
+
+void Database::addSupplier(const QString& supplier)
+{
+    QSqlQuery query(_database);
+
+    query.prepare("INSERT INTO lieferanten (name) VALUES (?)");
+    query.bindValue(0, supplier);
+
+    if (!query.exec())
+    {
+        QMessageBox::critical(0, "Database Error", "Kann den Lieferanten nicht zur Datenbank hinzufügen.");
     }
 }

@@ -7,7 +7,7 @@
 #include "Database.h"
 
 namespace Ui {
-class GoodsDialog;
+class DatabaseCombo;
 }
 
 class GoodsDialog : public QWidget
@@ -18,17 +18,16 @@ public:
     GoodsDialog(QWidget* parent = 0);
     GoodsDialog(Database& database, QWidget* parent = 0);
 
-    void setDatabase(Database& database) { _database = &database; }
+    void setDatabase(Database& database);
+    void getAllGoodsFromDatabase(void);
 
-    const QString& selectedGood(void) const;
+    QString selectedGood(void) const;
 
 private slots:
     void selectItem(int index);
 
 private:
-    void getAllGoodsFromDatabase(void);
-
-    Ui::GoodsDialog* _ui;
+    Ui::DatabaseCombo* _ui;
     Database* _database;
 };
 

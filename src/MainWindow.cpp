@@ -21,10 +21,9 @@ MainWindow::MainWindow(void)
       _scale(new DummyScale)
 {
     _ui->setupUi(this);
+    _ui->_goods->setDatabase(_database);
+    _ui->_suppliers->setDatabase(_database);
 
-    /* Initialize the database. */
-//    _database.connect("biogasernte2015");
-//    _database.create();
 
     /* Create menus. */
     QMenuBar* bar = this->menuBar();
@@ -87,6 +86,8 @@ void MainWindow::selectDatabase(void)
     DatabaseDialog dialog(_database, this);
     dialog.exec();
     this->getAllVehiclesFromDatabase();
+    _ui->_goods->getAllGoodsFromDatabase();
+    _ui->_suppliers->getAllSuppliersFromDatabase();
 }
 
 void MainWindow::startWeighting(void)

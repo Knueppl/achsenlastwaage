@@ -27,10 +27,10 @@ void DatabaseDialog::chooseDatabase(int index)
 
         if (dialog.exec() == QDialog::Accepted)
         {
-            if (dialog.databaseName().isEmpty())
+            if (dialog.text().isEmpty())
                 return;
 
-            _database.createDatabase(dialog.databaseName());
+            _database.createDatabase(dialog.text());
             this->showDatabases();
             _database.selectDatabase(_ui->_comboDatabases->currentText());
         }

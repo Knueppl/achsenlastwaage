@@ -1,70 +1,58 @@
 #include "SupplierDialog.h"
+#include "ui_DatabaseCombo.h"
+#include "CreateTextDialog.h"
 
-#include <QDebug>
-
-SupplierDialog::SupplierDialog(const QString& file, QWidget* parent)
-    : QDialog(parent),
-      m_file(file)
+SupplierDialog::SupplierDialog(QWidget* parent)
+    : QWidget(parent),
+      _ui(new Ui::DatabaseCombo),
+      _database(0)
 {
-    m_mainLayout = new QVBoxLayout(this);
+    _ui->setupUi(this);
+}
 
-    m_groupCreate = new QGroupBox("hinzufügen");
-    m_createLayout = new QGridLayout;
-    m_line = new QLineEdit;
-    m_createButton = new QPushButton("hinzufügen");
-    m_createLayout->addWidget(m_line, 0, 0);
-    m_createLayout->addWidget(m_createButton, 0, 1);
-    m_groupCreate->setLayout(m_createLayout);
-    m_mainLayout->addWidget(m_groupCreate);
+void SupplierDialog::setDatabase(Database& database)
+{
+    _database = &database;
+    this->getAllSuppliersFromDatabase();
+}
 
-    m_groupDelete = new QGroupBox("löschen");
-    m_deleteLayout = new QGridLayout;
-    m_list = new QListWidget;
-    m_deleteButton = new QPushButton("löschen");
-    m_deleteLayout->addWidget(m_list, 0, 0);
-    m_deleteLayout->addWidget(m_deleteButton, 0, 1);
-    m_groupDelete->setLayout(m_deleteLayout);
-    m_mainLayout->addWidget(m_groupDelete);
+QString SupplierDialog::selectedSupplier(void) const
+{
+    return _ui->_combo->currentText();
+}
 
-    m_closeButton = new QPushButton("schließen");
-    m_closeButton->setDefault(true);
-    m_mainLayout->addWidget(m_closeButton);
-
-    if (!m_file.open(QIODevice::ReadWrite | QIODevice::Text))
-    {
-        qDebug() << "Kann die Datei " << m_file.fileName() << " nicht öffnen.";
-        this->reject();
+void SupplierDialog::selectItem(int index)
+{
+    if (index < 0)
         return;
-    }
 
-    this->readCompleteFile();
-
-    this->connect(m_closeButton, SIGNAL(clicked()), this, SLOT(accept()));
-    this->connect(m_createButton, SIGNAL(clicked()), this, SLOT(insertSupplier()));
-}
-
-void SupplierDialog::readCompleteFile(void)
-{
-    QTextStream in(&m_file);
-
-    while (!in.atEnd())
+    if (index == _ui->_combo->count() - 1)
     {
-        QString line(in.readLine());
-        QStringList list(line.split(":"));
-        m_list->insertItem(0, list.at(0));
+        CreateTextDialog dialog(this);
+
+        if (dialog.exec() == QDialog::Accepted)
+        {
+            if (dialog.text().isEmpty())
+                return;
+
+            _database->addSupplier(dialog.text());
+            this->getAllSuppliersFromDatabase();
+        }
     }
 }
 
-void SupplierDialog::insertSupplier(void)
+void SupplierDialog::getAllSuppliersFromDatabase(void)
 {
-    QTextStream out(&m_file);
+    QVector<QString> suppliers;
 
-    out << m_line->text() << ":\n";
-    m_file.flush();
-    this->readCompleteFile();
-}
+    _database->getAllSuppliers(suppliers);
+    this->disconnect(_ui->_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(selectItem(int)));
+    _ui->_combo->clear();
 
-void SupplierDialog::removeSupplier(void)
-{
+    foreach (const QString& supplier, suppliers)
+        _ui->_combo->addItem(supplier);
 
+    _ui->_combo->addItem("Erstelle neuen Lieferanten");
+    _ui->_combo->setCurrentIndex(0);
+    this->connect(_ui->_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(selectItem(int)));
 }

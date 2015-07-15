@@ -1,9 +1,10 @@
 #include "GoodsDialog.h"
-#include "ui_GoodsDialog.h"
+#include "ui_DatabaseCombo.h"
+#include "CreateTextDialog.h"
 
-GoodsDialog::GoodsDialog(Database& database, QWidget* parent)
+GoodsDialog::GoodsDialog(QWidget* parent)
     : QWidget(),
-      _ui(new Ui::GoodsDialog),
+      _ui(new Ui::DatabaseCombo),
       _database(0)
 {
     _ui->setupUi(this);
@@ -11,15 +12,21 @@ GoodsDialog::GoodsDialog(Database& database, QWidget* parent)
 
 GoodsDialog::GoodsDialog(Database& database, QWidget* parent)
     : QWidget(),
-      _ui(new Ui::GoodsDialog),
+      _ui(new Ui::DatabaseCombo),
       _database(&database)
 {
     _ui->setupUi(this);
 }
 
-const QString& GoodsDialog::selectedGood(void) const
+void GoodsDialog::setDatabase(Database& database)
 {
-    _ui->_comboGoods->currentText();
+    _database = &database;
+    this->getAllGoodsFromDatabase();
+}
+
+QString GoodsDialog::selectedGood(void) const
+{
+    return _ui->_combo->currentText();
 }
 
 void GoodsDialog::selectItem(int index)
@@ -27,9 +34,18 @@ void GoodsDialog::selectItem(int index)
     if (index < 0)
         return;
 
-    if (index == _ui->_comboGoods->count() - 1)
+    if (index == _ui->_combo->count() - 1)
     {
-        // TO DO: text dialog...
+        CreateTextDialog dialog(this);
+
+        if (dialog.exec() == QDialog::Accepted)
+        {
+            if (dialog.text().isEmpty())
+                return;
+
+            _database->addGood(dialog.text());
+            this->getAllGoodsFromDatabase();
+        }
     }
 }
 
@@ -38,12 +54,13 @@ void GoodsDialog::getAllGoodsFromDatabase(void)
     QVector<QString> goods;
 
     _database->getAllGoods(goods);
-    this->disconnect(_ui->_comboGoods, SIGNAL(currentIndexChanged(int)), this, SLOT(selectItem(int)));
-    _ui->_comboGoods->clear();
+    this->disconnect(_ui->_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(selectItem(int)));
+    _ui->_combo->clear();
 
-    for (auto good : goods)
-        _ui->_comboGoods->addItem(good);
+    foreach (const QString& good, goods)
+        _ui->_combo->addItem(good);
 
-    _ui->_comboGoods->addItem("Erstelle neue Ware");
-    this->connect(_ui->_comboGoods, SIGNAL(currentIndexChanged(int)), this, SLOT(selectItem(int)));
+    _ui->_combo->addItem("Erstelle neue Ware");
+    _ui->_combo->setCurrentIndex(0);
+    this->connect(_ui->_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(selectItem(int)));
 }

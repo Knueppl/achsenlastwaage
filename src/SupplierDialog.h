@@ -1,40 +1,32 @@
 #ifndef ___SUPPLIER_DIALOG_H___
 #define ___SUPPLIER_DIALOG_H___
 
-#include <QDialog>
-#include <QVBoxLayout>
-#include <QGridLayout>
-#include <QGroupBox>
-#include <QPushButton>
-#include <QListWidget>
-#include <QLineEdit>
-#include <QFile>
+#include <QWidget>
 
-class SupplierDialog : public QDialog
+#include "Database.h"
+
+namespace Ui {
+class DatabaseCombo;
+}
+
+class SupplierDialog : public QWidget
 {
     Q_OBJECT
 
 public:
-    SupplierDialog(const QString& file, QWidget* parent = 0);
+    SupplierDialog(QWidget* parent = 0);
+
+    void setDatabase(Database& database);
+    void getAllSuppliersFromDatabase(void);
+
+    QString selectedSupplier(void) const;
 
 private slots:
-    void insertSupplier(void);
-    void removeSupplier(void);
+    void selectItem(int index);
 
 private:
-    void readCompleteFile(void);
-
-    QFile        m_file;
-    QVBoxLayout* m_mainLayout;
-    QGridLayout* m_createLayout;
-    QGridLayout* m_deleteLayout;
-    QGroupBox*   m_groupCreate;
-    QGroupBox*   m_groupDelete;
-    QPushButton* m_deleteButton;
-    QPushButton* m_closeButton;
-    QPushButton* m_createButton;
-    QListWidget* m_list;
-    QLineEdit*   m_line;
+    Ui::DatabaseCombo* _ui;
+    Database* _database;
 };
 
 #endif

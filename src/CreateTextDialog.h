@@ -13,7 +13,7 @@ class CreateTextDialog : public QDialog
 public:
     CreateTextDialog(QWidget* parent = 0);
 
-    QString databaseName(void) const;
+    QString text(void) const;
 
 private:
     Ui::CreateTextDialog* _ui;

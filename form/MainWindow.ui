@@ -14,7 +14,58 @@
    <string>Achsenlastwaage v4</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout"/>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="GoodsDialog" name="_goods" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>42</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="SupplierDialog" name="_suppliers" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>42</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>571</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -28,6 +79,20 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GoodsDialog</class>
+   <extends>QWidget</extends>
+   <header>GoodsDialog.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SupplierDialog</class>
+   <extends>QWidget</extends>
+   <header>SupplierDialog.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

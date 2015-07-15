@@ -12,6 +12,7 @@ set(QT_USE_QTXMLPATTERNS TRUE)
 include(${QT_USE_FILE})
 include_directories(${QT_QTSQL_INCLUDE_DIR}
                     ${CMAKE_CURRENT_BINARY_DIR}
+                    ${SRC_DIR}
                     )
 
 set(MOC_HEADERS ${SRC_DIR}/SupplierDialog.h
@@ -22,6 +23,8 @@ set(MOC_HEADERS ${SRC_DIR}/SupplierDialog.h
                 ${SRC_DIR}/Scale.h
                 ${SRC_DIR}/DummyScale.h
                 ${SRC_DIR}/DummyScaleWidget.h
+                ${SRC_DIR}/GoodsDialog.h
+                ${SRC_DIR}/SupplierDialog.h
                 )
 
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
@@ -32,6 +35,7 @@ qt4_wrap_ui(MOC_FORMS
             ${FORM_DIR}/DatabaseDialog.ui
             ${FORM_DIR}/CreateTextDialog.ui
             ${FORM_DIR}/DummyScaleWidget.ui
+            ${FORM_DIR}/DatabaseCombo.ui
             )
 
 set(SRC ${SRC_DIR}/SupplierDialog.cpp
@@ -45,6 +49,8 @@ set(SRC ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/DummyScale.cpp
         ${SRC_DIR}/DummyScaleWidget.cpp
         ${SRC_DIR}/Weighting.cpp
+        ${SRC_DIR}/GoodsDialog.cpp
+        ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/achsenlastwaage.cpp
         ${MOC_SOURCES}
         ${MOC_FORMS}

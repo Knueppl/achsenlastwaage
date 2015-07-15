@@ -27,6 +27,9 @@ public:
     void getAllGoods(QVector<QString>& goods);
     void addGood(const QString& good);
 
+    void getAllSuppliers(QVector<QString>& suppliers);
+    void addSupplier(const QString& supplier);
+
 private:
     QSqlDatabase _database;
 };
