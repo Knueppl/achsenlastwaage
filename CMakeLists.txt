@@ -16,7 +16,6 @@ include_directories(${QT_QTSQL_INCLUDE_DIR}
                     )
 
 set(MOC_HEADERS ${SRC_DIR}/SupplierDialog.h
-                ${SRC_DIR}/ProductDialog.h
                 ${SRC_DIR}/CreateVehicleDialog.h
                 ${SRC_DIR}/MainWindow.h
                 ${SRC_DIR}/DatabaseDialog.h
@@ -40,7 +39,6 @@ qt4_wrap_ui(MOC_FORMS
             )
 
 set(SRC ${SRC_DIR}/SupplierDialog.cpp
-        ${SRC_DIR}/ProductDialog.cpp
         ${SRC_DIR}/Database.cpp
         ${SRC_DIR}/CreateVehicleDialog.cpp
         ${SRC_DIR}/MainWindow.cpp
