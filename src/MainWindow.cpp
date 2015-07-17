@@ -23,6 +23,7 @@ MainWindow::MainWindow(void)
     _ui->setupUi(this);
     _ui->_goods->setDatabase(_database);
     _ui->_suppliers->setDatabase(_database);
+    _ui->_fields->setDatabase(_database);
 
 
     /* Create menus. */
@@ -88,6 +89,7 @@ void MainWindow::selectDatabase(void)
     this->getAllVehiclesFromDatabase();
     _ui->_goods->getAllGoodsFromDatabase();
     _ui->_suppliers->getAllSuppliersFromDatabase();
+    _ui->_fields->getAllFieldsFromDatabase();
 }
 
 void MainWindow::startWeighting(void)

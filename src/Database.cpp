@@ -98,7 +98,7 @@ void Database::createDatabase(const QString& database)
         QMessageBox::critical(0, "Database Error", query.lastError().text());
 
 
-    // Create the table weighting
+    // Create the table weighting.
     query.prepare("CREATE TABLE wiegungen ("
                   "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
                   "date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
@@ -110,12 +110,22 @@ void Database::createDatabase(const QString& database)
         QMessageBox::critical(0, "Database Error", query.lastError().text());
 
 
+    // Create the table field.
+    query.prepare("CREATE TABLE felder ("
+                  "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+                  "name VARCHAR(100) NOT NULL UNIQUE"
+                  ")");
+
+    if (!query.exec())
+        QMessageBox::critical(0, "Database Error", query.lastError().text());
+
+
     // Add some default goods.
-    this->addGood("Mais");
-    this->addGood("Triticale");
+//    this->addGood("Mais");
+//    this->addGood("Triticale");
 
     // Add a default supplier.
-    this->addSupplier("Merkl");
+//    this->addSupplier("Merkl");
 }
 
 void Database::save(const QString& fileName)
@@ -243,5 +253,34 @@ void Database::addSupplier(const QString& supplier)
     if (!query.exec())
     {
         QMessageBox::critical(0, "Database Error", "Kann den Lieferanten nicht zur Datenbank hinzufügen.");
+    }
+}
+
+void Database::getAllFields(QVector<QString>& fields)
+{
+    QSqlQuery query(_database);
+
+    fields.clear();
+    query.prepare("SELECT name from felder");
+
+    if (!query.exec())
+    {
+        QMessageBox::critical(0, "Database Error", "Kann die Felder nicht aus der Datenbank lesen.");
+    }
+
+    while (query.next())
+        fields.push_back(query.value(0).toString());
+}
+
+void Database::addField(const QString& field)
+{
+    QSqlQuery query(_database);
+
+    query.prepare("INSERT INTO felder (name) VALUES (?)");
+    query.bindValue(0, field);
+
+    if (!query.exec())
+    {
+        QMessageBox::critical(0, "Database Error", "Kann das Feld nicht zur Datenbank hinzufügen.");
     }
 }

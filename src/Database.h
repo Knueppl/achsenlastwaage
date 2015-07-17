@@ -30,6 +30,9 @@ public:
     void getAllSuppliers(QVector<QString>& suppliers);
     void addSupplier(const QString& supplier);
 
+    void getAllFields(QVector<QString>& fields);
+    void addField(const QString& field);
+
 private:
     QSqlDatabase _database;
 };

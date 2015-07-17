@@ -16,3 +16,8 @@ QString CreateTextDialog::text(void) const
 {
     return _ui->_lineName->text();
 }
+
+void CreateTextDialog::setInfoText(const QString& text)
+{
+    _ui->_labelInfo->setText(text);
+}

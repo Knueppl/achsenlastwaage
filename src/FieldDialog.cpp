@@ -1,29 +1,21 @@
-#include "GoodsDialog.h"
+#include "FieldDialog.h"
 #include "ui_DatabaseCombo.h"
 #include "CreateTextDialog.h"
 
-GoodsDialog::GoodsDialog(QWidget* parent)
-    : QWidget(),
+FieldDialog::FieldDialog(QWidget* parent)
+    : QWidget(parent),
       _ui(new Ui::DatabaseCombo),
       _database(0)
 {
     _ui->setupUi(this);
 }
 
-GoodsDialog::GoodsDialog(Database& database, QWidget* parent)
-    : QWidget(),
-      _ui(new Ui::DatabaseCombo),
-      _database(&database)
-{
-    _ui->setupUi(this);
-}
-
-void GoodsDialog::setDatabase(Database& database)
+void FieldDialog::setDatabase(Database& database)
 {
     _database = &database;
 }
 
-QString GoodsDialog::selectedGood(void) const
+QString FieldDialog::selectedField(void) const
 {
     if (_ui->_combo->currentIndex() == _ui->_combo->count() - 1)
         return QString("");
@@ -31,7 +23,7 @@ QString GoodsDialog::selectedGood(void) const
     return _ui->_combo->currentText();
 }
 
-void GoodsDialog::selectItem(int index)
+void FieldDialog::selectItem(int index)
 {
     if (index < 0)
         return;
@@ -40,7 +32,7 @@ void GoodsDialog::selectItem(int index)
     {
         CreateTextDialog dialog(this);
 
-        dialog.setInfoText("Geben Sie bitte den Namen der neuen Ware ein.");
+        dialog.setInfoText("Geben Sie bitte den Namen des Feldes ein.");
 
         if (dialog.exec() == QDialog::Accepted)
         {
@@ -50,26 +42,26 @@ void GoodsDialog::selectItem(int index)
                 return;
             }
 
-            _database->addGood(dialog.text());
-            this->getAllGoodsFromDatabase();
+            _database->addField(dialog.text());
+            this->getAllFieldsFromDatabase();
         }
 
         _ui->_combo->setCurrentIndex(0);
     }
 }
 
-void GoodsDialog::getAllGoodsFromDatabase(void)
+void FieldDialog::getAllFieldsFromDatabase(void)
 {
-    QVector<QString> goods;
+    QVector<QString> fields;
 
-    _database->getAllGoods(goods);
+    _database->getAllFields(fields);
     this->disconnect(_ui->_combo, SIGNAL(activated(int)), this, SLOT(selectItem(int)));
     _ui->_combo->clear();
 
-    foreach (const QString& good, goods)
-        _ui->_combo->addItem(good);
+    foreach (const QString& field, fields)
+        _ui->_combo->addItem(field);
 
-    _ui->_combo->addItem("Erstelle neue Ware");
+    _ui->_combo->addItem("Füge Feld hinzu");
     _ui->_combo->setCurrentIndex(0);
     this->connect(_ui->_combo, SIGNAL(activated(int)), this, SLOT(selectItem(int)));
 }

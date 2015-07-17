@@ -14,6 +14,7 @@ public:
     CreateTextDialog(QWidget* parent = 0);
 
     QString text(void) const;
+    void setInfoText(const QString& text);
 
 private:
     Ui::CreateTextDialog* _ui;
