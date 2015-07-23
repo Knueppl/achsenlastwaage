@@ -8,6 +8,7 @@ GoodsDialog::GoodsDialog(QWidget* parent)
       _database(0)
 {
     _ui->setupUi(this);
+    this->setDisabled(true);
 }
 
 GoodsDialog::GoodsDialog(Database& database, QWidget* parent)
@@ -16,6 +17,7 @@ GoodsDialog::GoodsDialog(Database& database, QWidget* parent)
       _database(&database)
 {
     _ui->setupUi(this);
+    this->setDisabled(true);
 }
 
 void GoodsDialog::setDatabase(Database& database)
@@ -71,5 +73,6 @@ void GoodsDialog::getAllGoodsFromDatabase(void)
 
     _ui->_combo->addItem("Erstelle neue Ware");
     _ui->_combo->setCurrentIndex(0);
+    this->setEnabled(true);
     this->connect(_ui->_combo, SIGNAL(activated(int)), this, SLOT(selectItem(int)));
 }

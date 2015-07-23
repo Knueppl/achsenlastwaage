@@ -2,9 +2,11 @@ cmake_minimum_required(VERSION 2.8)
 
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 set(FORM_DIR ${CMAKE_SOURCE_DIR}/form)
+set(PIC_DIR ${CMAKE_SOURCE_DIR}/picture)
 
 find_package(Qt4 REQUIRED)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(QT_USE_QTSQL TRUE)
 set(QT_USE_QTWEBKIT TRUE)
 set(QT_USE_QTXMLPATTERNS TRUE)
@@ -38,6 +40,10 @@ qt4_wrap_ui(MOC_FORMS
             ${FORM_DIR}/DatabaseCombo.ui
             )
 
+qt4_add_resources(RESOURCES
+                  ${PIC_DIR}/resource.qrc
+                  )
+
 set(SRC ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/Database.cpp
         ${SRC_DIR}/CreateVehicleDialog.cpp
@@ -51,7 +57,9 @@ set(SRC ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/GoodsDialog.cpp
         ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/FieldDialog.cpp
+        ${SRC_DIR}/VehicleButton.cpp
         ${SRC_DIR}/achsenlastwaage.cpp
+        ${RESOURCES}
         ${MOC_SOURCES}
         ${MOC_FORMS}
         )

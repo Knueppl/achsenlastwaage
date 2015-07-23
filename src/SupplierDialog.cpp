@@ -8,6 +8,7 @@ SupplierDialog::SupplierDialog(QWidget* parent)
       _database(0)
 {
     _ui->setupUi(this);
+    this->setDisabled(true);
 }
 
 void SupplierDialog::setDatabase(Database& database)
@@ -63,5 +64,6 @@ void SupplierDialog::getAllSuppliersFromDatabase(void)
 
     _ui->_combo->addItem("Erstelle neuen Lieferanten");
     _ui->_combo->setCurrentIndex(0);
+    this->setEnabled(true);
     this->connect(_ui->_combo, SIGNAL(activated(int)), this, SLOT(selectItem(int)));
 }

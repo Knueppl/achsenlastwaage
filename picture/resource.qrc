@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="vehicle">
+    <file>truck-two-axes.png</file>
+    <file>truck-three-axes.png</file>
+    <file>truck-four-axes.png</file>
+    <file>truck-five-axes.png</file>
+  </qresource>
+</RCC>
