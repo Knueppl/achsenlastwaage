@@ -1,17 +1,24 @@
 #include "VehicleButton.h"
 #include "Vehicle.h"
 
+#include <QAction>
 #include <QPainter>
 #include <QDebug>
 
-QVector<QPixmap> VehicleButton::s_icons = { QPixmap(":vehicle/truck-two-axes.png"),
-                                            QPixmap(":vehicle/truck-three-axes.png"),
-                                            QPixmap(":vehicle/truck-four-axes.png"),
-                                            QPixmap(":vehicle/truck-five-axes.png") };
+QVector<QPixmap> VehicleButton::s_icons;
 
-VehicleButton::VehicleButton(Vehicle* vehicle, QWidget* parent)
+VehicleButton::VehicleButton(QAction* action, QWidget* parent)
     : QAbstractButton(parent)
 {
+    qDebug() << __PRETTY_FUNCTION__;
+    if (!s_icons.size())
+    {
+        s_icons.push_back(QPixmap(":vehicle/truck-two-axes.png"));
+        s_icons.push_back(QPixmap(":vehicle/truck-three-axes.png"));
+        s_icons.push_back(QPixmap(":vehicle/truck-four-axes.png"));
+        s_icons.push_back(QPixmap(":vehicle/truck-five-axes.png"));
+    }
+
     Vehicle* vehicle = dynamic_cast<Vehicle*>(action->data().value<Vehicle*>());
 
     if (!vehicle)
@@ -20,11 +27,12 @@ VehicleButton::VehicleButton(Vehicle* vehicle, QWidget* parent)
         return;
     }
 
-    _vehicleType = vehicle->axes() - 2;
+    _vehicleType = static_cast<VehicleType>(vehicle->axes() - 2);
 }
 
 void VehicleButton::paintEvent(QPaintEvent*)
 {
+    qDebug() << __PRETTY_FUNCTION__;
     QPainter painter(this);
 
     painter.drawPixmap(QRect(this->width() >> 1,

@@ -16,6 +16,16 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
+     <widget class="VehicleStackWidget" name="_vehicleStack" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>200</width>
+        <height>0</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <widget class="GoodsDialog" name="_goods" native="true">
@@ -106,6 +116,12 @@
    <class>FieldDialog</class>
    <extends>QWidget</extends>
    <header>FieldDialog.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>VehicleStackWidget</class>
+   <extends>QWidget</extends>
+   <header>VehicleStackWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

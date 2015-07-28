@@ -62,6 +62,7 @@ void MainWindow::getAllVehiclesFromDatabase(void)
         this->connect(action, SIGNAL(triggered()), this, SLOT(startWeighting()));
         action->setData(data);
         _menuStartWeighting->addAction(action);
+        _ui->_vehicleStack->addVehicle(action);
     }
 }
 
@@ -80,6 +81,7 @@ void MainWindow::addVehicle(void)
     _database.addVehicle(dialog.vehicle());
     action->setData(data);
     _menuStartWeighting->addAction(action);
+    _ui->_vehicleStack->addVehicle(action);
 }
 
 void MainWindow::selectDatabase(void)

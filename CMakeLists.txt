@@ -58,6 +58,7 @@ set(SRC ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/FieldDialog.cpp
         ${SRC_DIR}/VehicleButton.cpp
+        ${SRC_DIR}/VehicleStackWidget.cpp
         ${SRC_DIR}/achsenlastwaage.cpp
         ${RESOURCES}
         ${MOC_SOURCES}

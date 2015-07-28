@@ -4,12 +4,12 @@
 #include <QAbstractButton>
 #include <QVector>
 
-class Vehicle;
+class QAction;
 
 class VehicleButton : public QAbstractButton
 {
 public:
-    VehicleButton(Vehicle* vehicle, QWidget* parent = 0);
+    VehicleButton(QAction* action, QWidget* parent = 0);
 
 protected:
     virtual void paintEvent(QPaintEvent* event);
