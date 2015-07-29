@@ -53,6 +53,7 @@ void MainWindow::getAllVehiclesFromDatabase(void)
     _menuStartWeighting->clear();
     _database.getAllVehicles(_vehicles);
 
+
     for (QVector<Vehicle*>::const_iterator vehicle(_vehicles.begin()); vehicle < _vehicles.end(); ++vehicle)
     {
         // To do: connect the action with start weighting slot.

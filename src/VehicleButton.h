@@ -13,6 +13,7 @@ public:
 
 protected:
     virtual void paintEvent(QPaintEvent* event);
+    virtual void enterEvent(QEvent* event);
 
 private:
     enum VehicleType {

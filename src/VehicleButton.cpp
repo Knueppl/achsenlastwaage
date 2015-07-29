@@ -4,6 +4,7 @@
 #include <QAction>
 #include <QPainter>
 #include <QDebug>
+#include <QEvent>
 
 QVector<QPixmap> VehicleButton::s_icons;
 
@@ -28,6 +29,8 @@ VehicleButton::VehicleButton(QAction* action, QWidget* parent)
     }
 
     _vehicleType = static_cast<VehicleType>(vehicle->axes() - 2);
+
+    this->setMinimumHeight(42);
 }
 
 void VehicleButton::paintEvent(QPaintEvent*)
@@ -41,4 +44,10 @@ void VehicleButton::paintEvent(QPaintEvent*)
                              s_icons[_vehicleType].height()),
                        s_icons[_vehicleType],
                        s_icons[_vehicleType].rect());
+}
+
+void VehicleButton::enterEvent(QEvent* event)
+{
+    event->accept();
+    qDebug() << __PRETTY_FUNCTION__;
 }
