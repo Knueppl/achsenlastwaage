@@ -41,3 +41,8 @@ void ScaleWidget::start(void)
 
     _scene->start(vehicle->axes());
 }
+
+void ScaleWidget::showAxisWeight(const int kg)
+{
+    _scene->setNextWeight(kg);
+}

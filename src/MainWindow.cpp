@@ -35,10 +35,12 @@ MainWindow::MainWindow(void)
     menu = bar->addMenu("Datenbank");
     menu->addAction("Auswählen", this, SLOT(selectDatabase()));
 
+
     // For debugging.
     _scaleWidget = new DummyScaleWidget(_scale);
     _scaleWidget->show();
     this->connect(_scale, SIGNAL(finished(Weighting*)), this, SLOT(stopWeighting(Weighting*)));
+    this->connect(_scale, SIGNAL(axisWeight(const int)), _ui->_scale, SLOT(showAxisWeight(const int)));
 }
 
 MainWindow::~MainWindow(void)

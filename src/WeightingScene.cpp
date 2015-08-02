@@ -41,7 +41,10 @@ void WeightingScene::start(const int axes)
 
 void WeightingScene::setNextWeight(const int kg)
 {
+    if (++_currentAxis > _vehicleType + 2)
+        _currentAxis = _vehicleType + 2;
 
+    _timer.start(50);
 }
 
 void WeightingScene::tick(void)

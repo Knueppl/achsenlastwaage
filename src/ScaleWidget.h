@@ -15,6 +15,7 @@ public:
 
 public slots:
     void start(void);
+    void showAxisWeight(const int kg);
 
 private:
     WeightingScene* _scene;

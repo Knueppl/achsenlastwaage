@@ -19,6 +19,7 @@ void Scale::cancel(void)
 void Scale::setNextAxisWeight(const int kg)
 {
     _weighting << kg;
+    emit this->axisWeight(kg);
     qDebug() << "scale: next axis weight set to " << kg << ".";
 
     if (_weighting.finished())

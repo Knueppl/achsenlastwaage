@@ -22,6 +22,7 @@ public slots:
 signals:
     void finished(Weighting* weight);
     void started(void);
+    void axisWeight(const int kg);
 
 protected:
     void setNextAxisWeight(const int kg);
