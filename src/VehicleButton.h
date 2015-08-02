@@ -5,6 +5,7 @@
 #include <QVector>
 
 class QAction;
+class Vehicle;
 
 class VehicleButton : public QAbstractButton
 {
@@ -14,16 +15,21 @@ public:
 protected:
     virtual void paintEvent(QPaintEvent* event);
     virtual void enterEvent(QEvent* event);
+    virtual void leaveEvent(QEvent* event);
 
 private:
     enum VehicleType {
         TwoAxes = 0,
         ThreeAxes,
         FourAxes,
-        FiveAxes
+        FiveAxes,
+        None
     };
 
-    VehicleType _vehicleType;
+    Vehicle* _vehicle = 0;
+    VehicleType _vehicleType = None;
+
+    bool _entered = false;
 
     static QVector<QPixmap> s_icons;
 };

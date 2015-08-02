@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1077</width>
+    <height>536</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <widget class="VehicleStackWidget" name="_vehicleStack" native="true">
       <property name="minimumSize">
        <size>
-        <width>200</width>
+        <width>385</width>
         <height>0</height>
        </size>
       </property>
@@ -92,7 +92,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1077</width>
      <height>27</height>
     </rect>
    </property>

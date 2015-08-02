@@ -9,6 +9,7 @@ VehicleStackWidget::VehicleStackWidget(QWidget* parent)
     : QWidget(parent),
       _layout(new QVBoxLayout)
 {
+    _layout->addStretch();
     this->setLayout(_layout);
 }
 
@@ -28,7 +29,7 @@ void VehicleStackWidget::addVehicle(QAction* action)
         return;
     }
 
-    _layout->addWidget(new VehicleButton(action));
+    _layout->insertWidget(0, new VehicleButton(action));
 }
 
 void VehicleStackWidget::addVehicles(QVector<QAction*> actions)
@@ -42,8 +43,9 @@ void VehicleStackWidget::addVehicles(QVector<QAction*> actions)
     QVBoxLayout* layout = new QVBoxLayout;
 
     for (auto button : buttons)
-        layout->addWidget(button);
+        layout->insertWidget(0, button);
 
+    layout->addStretch();
     this->setLayout(layout);
 }
 
