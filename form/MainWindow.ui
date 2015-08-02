@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1077</width>
+    <width>1153</width>
     <height>536</height>
    </rect>
   </property>
@@ -73,6 +73,16 @@
      </layout>
     </item>
     <item>
+     <widget class="ScaleWidget" name="_scale" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>500</width>
+        <height>0</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item>
      <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -92,7 +102,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1077</width>
+     <width>1153</width>
      <height>27</height>
     </rect>
    </property>
@@ -122,6 +132,12 @@
    <class>VehicleStackWidget</class>
    <extends>QWidget</extends>
    <header>VehicleStackWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ScaleWidget</class>
+   <extends>QWidget</extends>
+   <header>ScaleWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

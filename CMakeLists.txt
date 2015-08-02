@@ -27,6 +27,8 @@ set(MOC_HEADERS ${SRC_DIR}/SupplierDialog.h
                 ${SRC_DIR}/GoodsDialog.h
                 ${SRC_DIR}/SupplierDialog.h
                 ${SRC_DIR}/FieldDialog.h
+                ${SRC_DIR}/ScaleWidget.h
+                ${SRC_DIR}/WeightingScene.h
                 )
 
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
@@ -59,6 +61,8 @@ set(SRC ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/FieldDialog.cpp
         ${SRC_DIR}/VehicleButton.cpp
         ${SRC_DIR}/VehicleStackWidget.cpp
+        ${SRC_DIR}/WeightingScene.cpp
+        ${SRC_DIR}/ScaleWidget.cpp
         ${SRC_DIR}/achsenlastwaage.cpp
         ${RESOURCES}
         ${MOC_SOURCES}

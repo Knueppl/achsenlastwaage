@@ -7,6 +7,7 @@
 #include <QEvent>
 
 QVector<QPixmap> VehicleButton::s_icons;
+QVector<QVector<QPointF> > VehicleButton::s_iconAxesCoordinates;
 
 VehicleButton::VehicleButton(QAction* action, QWidget* parent)
     : QAbstractButton(parent)
@@ -18,6 +19,15 @@ VehicleButton::VehicleButton(QAction* action, QWidget* parent)
         s_icons.push_back(QPixmap(":vehicle/truck-three-axes.png"));
         s_icons.push_back(QPixmap(":vehicle/truck-four-axes.png"));
         s_icons.push_back(QPixmap(":vehicle/truck-five-axes.png"));
+
+        s_iconAxesCoordinates.push_back(QVector<QPointF>() = { QPointF(14.5f, 38.5f), QPointF(69.6f, 38.5f) });
+        s_iconAxesCoordinates.push_back(QVector<QPointF>() = { QPointF(14.5f, 38.5f), QPointF(69.5f, 38.5f),
+                    QPointF(95.6f, 38.5f) });
+        s_iconAxesCoordinates.push_back(QVector<QPointF>() = { QPointF(14.5f, 39.1f), QPointF(69.8f, 39.1f),
+                    QPointF(110.7f, 39.1f), QPointF(145.5f, 39.1f) });
+        s_iconAxesCoordinates.push_back(QVector<QPointF>() = { QPointF(14.5f, 38.5f), QPointF(69.5f, 38.5f),
+                    QPointF(95.6f, 38.5f), QPointF(135.0f, 38.5f), QPointF(169.6f, 38.5f) });
+
     }
 
 
@@ -49,7 +59,6 @@ VehicleButton::VehicleButton(QAction* action, QWidget* parent)
 
 void VehicleButton::paintEvent(QPaintEvent*)
 {
-    qDebug() << __PRETTY_FUNCTION__;
     if (!_vehicle)
         return;
 
@@ -95,4 +104,22 @@ void VehicleButton::leaveEvent(QEvent* event)
 {
     event->accept();
     _entered = false;
+}
+
+QPixmap VehicleButton::getVehicleIcon(const VehicleType type)
+{
+    if (type >= s_icons.size() || type < 0)
+        return QPixmap();
+
+    return s_icons[type];
+}
+
+QPointF VehicleButton::getIconAxesCoordinate(const VehicleType type, const int axis)
+{
+    if (type >= s_icons.size() || type < 0)
+        return QPointF(0.0f, 0.0f);
+    if (axis >= s_iconAxesCoordinates[type].size() || axis < 0)
+        return QPointF(0.0f, 0.0f);
+
+    return s_iconAxesCoordinates[type][axis];
 }

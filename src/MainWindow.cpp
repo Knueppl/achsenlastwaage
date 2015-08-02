@@ -61,6 +61,7 @@ void MainWindow::getAllVehiclesFromDatabase(void)
         QVariant data(QVariant::fromValue(*vehicle));
 
         this->connect(action, SIGNAL(triggered()), this, SLOT(startWeighting()));
+        this->connect(action, SIGNAL(triggered()), _ui->_scale, SLOT(start()));
         action->setData(data);
         _menuStartWeighting->addAction(action);
         _ui->_vehicleStack->addVehicle(action);
@@ -81,6 +82,8 @@ void MainWindow::addVehicle(void)
     _vehicles.push_back(dialog.vehicle());
     _database.addVehicle(dialog.vehicle());
     action->setData(data);
+    this->connect(action, SIGNAL(triggered()), this, SLOT(startWeighting()));
+    this->connect(action, SIGNAL(triggered()), _ui->_scale, SLOT(start()));
     _menuStartWeighting->addAction(action);
     _ui->_vehicleStack->addVehicle(action);
 }
