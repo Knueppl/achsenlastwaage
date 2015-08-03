@@ -13,6 +13,7 @@ ScaleWidget::ScaleWidget(QWidget* parent)
 {
     QHBoxLayout* layout = new QHBoxLayout;
 
+    layout->setContentsMargins(1, 0, 1, 0);
     layout->addWidget(_view);
     this->setLayout(layout);
 }
@@ -39,7 +40,7 @@ void ScaleWidget::start(void)
     }
 
 
-    _scene->start(vehicle->axes());
+    _scene->start(vehicle);
 }
 
 void ScaleWidget::showAxisWeight(const int kg)

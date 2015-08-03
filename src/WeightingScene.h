@@ -6,6 +6,8 @@
 
 #include "VehicleButton.h"
 
+class Vehicle;
+
 class WeightingScene : public QGraphicsScene
 {
     Q_OBJECT
@@ -14,16 +16,25 @@ public:
     WeightingScene(QObject* parent = 0);
     virtual ~WeightingScene(void);
 
-    void start(const int axes);
+    void start(const Vehicle* vehicle);
     void setNextWeight(const int kg);
 
 private slots:
     void tick(void);
 
 private:
-    QGraphicsPixmapItem* _vehicle;
+    QGraphicsPixmapItem* _vehicleItem;
+    QGraphicsTextItem* _axisWeightItem;
+    QGraphicsSimpleTextItem* _vehicleNameItem;
+    QGraphicsTextItem* _axesWeightsItem;
+    QGraphicsTextItem* _axesLabelItem;
+    QGraphicsTextItem* _weightsItem;
+    QGraphicsTextItem* _weightsLabelItem;
+    const Vehicle* _vehicle;
     VehicleButton::VehicleType _vehicleType;
     int _currentAxis;
+    int _sum;
+
     QTimer _timer;
 };
 
