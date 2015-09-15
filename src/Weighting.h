@@ -3,7 +3,7 @@
 
 #include <QVector>
 
-class Vehicle;
+#include "Vehicle.h"
 
 class Weighting
 {
@@ -19,6 +19,10 @@ public:
     void clear(void);
     bool finished(void) const { return _finished; }
     bool valid(void) const;
+
+    int brutto(void) const { return _weight; }
+    int tara(void) const { return _vehicle->tara(); }
+    int netto(void) const { return this->brutto() - this->netto(); }
 
     Weighting& operator<<(const int kg);
 

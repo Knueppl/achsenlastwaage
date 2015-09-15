@@ -5,6 +5,7 @@
 #include <QSqlDatabase>
 
 class Vehicle;
+class Weighting;
 
 class Database
 {
@@ -32,6 +33,8 @@ public:
 
     void getAllFields(QVector<QString>& fields);
     void addField(const QString& field);
+
+    void addWeighting(const Weighting* weighting);
 
 private:
     QSqlDatabase _database;

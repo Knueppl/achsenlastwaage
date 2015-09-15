@@ -1,5 +1,4 @@
 #include "Weighting.h"
-#include "Vehicle.h"
 
 #include <QDebug>
 

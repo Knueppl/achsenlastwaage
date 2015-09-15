@@ -127,8 +127,6 @@ void MainWindow::stopWeighting(Weighting* weighting)
 {
     _menuStartWeighting->setEnabled(true);
 
-    if (weighting)
-    {
-
-    }
+    if (weighting && weighting->valid())
+        _database.addWeighting(weighting);
 }

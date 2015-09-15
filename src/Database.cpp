@@ -1,5 +1,6 @@
 #include "Database.h"
 #include "Vehicle.h"
+#include "Weighting.h"
 
 #include <QMessageBox>
 #include <QSqlError>
@@ -101,8 +102,10 @@ void Database::createDatabase(const QString& database)
     // Create the table weighting.
     query.prepare("CREATE TABLE wiegungen ("
                   "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
-                  "date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+                  "fahrzeug INT NOT NULL,"
+                  "datum TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
                   "brutto INT,"
+                  "tara INT,"
                   "netto INT"
                   ")");
 
@@ -282,5 +285,21 @@ void Database::addField(const QString& field)
     if (!query.exec())
     {
         QMessageBox::critical(0, "Database Error", "Kann das Feld nicht zur Datenbank hinzufügen.");
+    }
+}
+
+void Database::addWeighting(const Weighting* weighting)
+{
+    QSqlQuery query(_database);
+
+    query.prepare("INSERT INTO wiegungen (fahrzeug, brutto, tara, netto) VALUES (?, ?, ?, ?)");
+    query.bindValue(0, weighting->vehicle()->id());
+    query.bindValue(1, weighting->brutto());
+    query.bindValue(2, weighting->tara());
+    query.bindValue(3, weighting->netto());
+
+    if (!query.exec())
+    {
+        QMessageBox::critical(0, "Database Error", "Kann die Wiegung nicht zur Datenbank hinzufügen.");
     }
 }
