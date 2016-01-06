@@ -22,7 +22,7 @@ public:
 
     int brutto(void) const { return _weight; }
     int tara(void) const { return _vehicle->tara(); }
-    int netto(void) const { return this->brutto() - this->netto(); }
+    int netto(void) const { return this->brutto() - this->tara(); }
 
     Weighting& operator<<(const int kg);
 

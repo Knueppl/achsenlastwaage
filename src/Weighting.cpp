@@ -3,7 +3,7 @@
 #include <QDebug>
 
 Weighting::Weighting(void)
-    : _vehicle(0),
+    : _vehicle(new Vehicle),
       _weight(-1),
       _finished(false)
 {
