@@ -120,12 +120,14 @@ void MainWindow::startWeighting(void)
     }
 
     _menuStartWeighting->setDisabled(true);
+    _ui->_vehicleStack->setDisabled(true);
     _scale->start(vehicle);
 }
 
 void MainWindow::stopWeighting(Weighting* weighting)
 {
     _menuStartWeighting->setEnabled(true);
+    _ui->_vehicleStack->setDisabled(false);
 
     if (weighting && weighting->valid())
         _database.addWeighting(weighting);

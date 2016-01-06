@@ -64,6 +64,7 @@ void VehicleButton::paintEvent(QPaintEvent*)
 
     QPainter painter(this);
 
+    painter.setPen(this->isEnabled() ? Qt:: black : Qt::darkGray);
     painter.drawLine(0, this->height() - 1, this->width() - 1, this->height() - 1);
     painter.setFont(QFont("Euro Plate", 24, QFont::Normal));
     painter.drawText(QPoint(0, 24), _vehicle->name());
