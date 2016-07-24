@@ -2,6 +2,7 @@
 #include "ui_MainWindow.h"
 #include "CreateVehicleDialog.h"
 #include "DatabaseDialog.h"
+#include "Fzw12.h"
 
 #include <QDebug>
 
@@ -18,7 +19,8 @@ MainWindow* MainWindow::instance(void)
 MainWindow::MainWindow(void)
     : QMainWindow(),
       _ui(new Ui::MainWindow),
-      _scale(new DummyScale)
+//      _scale(new DummyScale)
+      _scale(new Fzw12("/dev/ttyUSB0"))
 {
     _ui->setupUi(this);
     _ui->_goods->setDatabase(_database);
