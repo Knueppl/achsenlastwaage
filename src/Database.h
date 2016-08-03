@@ -4,6 +4,8 @@
 #include <QVector>
 #include <QSqlDatabase>
 
+#include "StoredWeighting.h"
+
 class Vehicle;
 class Weighting;
 
@@ -35,6 +37,7 @@ public:
     void addField(const QString& field);
 
     void addWeighting(const Weighting* weighting);
+    void getWeightings(QVector<StoredWeighting>& weightings);
 
 private:
     QSqlDatabase _database;

@@ -303,3 +303,35 @@ void Database::addWeighting(const Weighting* weighting)
         QMessageBox::critical(0, "Database Error", "Kann die Wiegung nicht zur Datenbank hinzufügen.");
     }
 }
+
+void Database::getWeightings(QVector<StoredWeighting>& weightings)
+{
+    QSqlQuery query(_database);
+
+    query.prepare("SELECT "
+                  "wiegungen.id, "
+                  "fahrzeuge.name, "
+                  "wiegungen.datum, "
+                  "wiegungen.brutto, "
+                  "wiegungen.tara, "
+                  "wiegungen.netto "
+                  "FROM wiegungen, fahrzeuge "
+                  "WHERE wiegungen.fahrzeug = fahrzeuge.id");
+
+    if (!query.exec())
+    {
+        QMessageBox::critical(0, "Database Error", "Kann die Wiegungnen nicht von der Datenbank lesen.");
+        return;
+    }
+
+    while (query.next())
+    {
+        weightings.push_back(StoredWeighting(query.value(0).toInt(),
+                                             query.value(1).toString(),
+                                             QDateTime::fromString(query.value(2).toString(),
+                                                                   "yyyy-MM-dd hh:mm:ss"),
+                                             query.value(3).toInt(),
+                                             query.value(4).toInt(),
+                                             query.value(5).toInt()));
+    }
+}

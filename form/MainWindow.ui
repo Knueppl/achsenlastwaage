@@ -105,17 +105,14 @@
      </layout>
     </item>
     <item>
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+     <widget class="WeightingView" name="_weightingView" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>571</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -160,6 +157,12 @@
    <class>ScaleWidget</class>
    <extends>QWidget</extends>
    <header>ScaleWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WeightingView</class>
+   <extends>QWidget</extends>
+   <header>WeightingView.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
