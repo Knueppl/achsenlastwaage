@@ -123,7 +123,7 @@ void MainWindow::startWeighting(void)
 
     _menuStartWeighting->setDisabled(true);
     _ui->_vehicleStack->setDisabled(true);
-    _scale->start(vehicle);
+    _scale->start(vehicle, _ui->_goods->selectedId(), _ui->_suppliers->selectedId(), _ui->_fields->selectedId());
 }
 
 void MainWindow::stopWeighting(Weighting* weighting)

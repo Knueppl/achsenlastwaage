@@ -103,6 +103,9 @@ void Database::createDatabase(const QString& database)
     query.prepare("CREATE TABLE wiegungen ("
                   "id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
                   "fahrzeug INT NOT NULL,"
+                  "ware INT,"
+                  "lieferant INT,"
+                  "feld INT,"
                   "datum TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
                   "brutto INT,"
                   "tara INT,"
@@ -206,7 +209,7 @@ void Database::getAllGoods(QVector<QString>& goods)
     QSqlQuery query(_database);
 
     goods.clear();
-    query.prepare("SELECT name from waren");
+    query.prepare("SELECT name FROM waren ORDER BY id");
 
     if (!query.exec())
     {
@@ -235,7 +238,7 @@ void Database::getAllSuppliers(QVector<QString>& suppliers)
     QSqlQuery query(_database);
 
     suppliers.clear();
-    query.prepare("SELECT name from lieferanten");
+    query.prepare("SELECT name FROM lieferanten ORDER BY id");
 
     if (!query.exec())
     {
@@ -264,7 +267,7 @@ void Database::getAllFields(QVector<QString>& fields)
     QSqlQuery query(_database);
 
     fields.clear();
-    query.prepare("SELECT name from felder");
+    query.prepare("SELECT name FROM felder ORDER BY id");
 
     if (!query.exec())
     {
@@ -292,11 +295,15 @@ void Database::addWeighting(const Weighting* weighting)
 {
     QSqlQuery query(_database);
 
-    query.prepare("INSERT INTO wiegungen (fahrzeug, brutto, tara, netto) VALUES (?, ?, ?, ?)");
+    query.prepare("INSERT INTO wiegungen (fahrzeug, ware, lieferant, feld, brutto, tara, netto)"
+                  "VALUES (?, ?, ?, ?, ?, ?, ?)");
     query.bindValue(0, weighting->vehicle()->id());
-    query.bindValue(1, weighting->brutto());
-    query.bindValue(2, weighting->tara());
-    query.bindValue(3, weighting->netto());
+    query.bindValue(1, weighting->goodId());
+    query.bindValue(2, weighting->supplierId());
+    query.bindValue(3, weighting->fieldId());
+    query.bindValue(4, weighting->brutto());
+    query.bindValue(5, weighting->tara());
+    query.bindValue(6, weighting->netto());
 
     if (!query.exec())
     {
@@ -312,14 +319,24 @@ void Database::getWeightings(QVector<StoredWeighting>& weightings)
                   "wiegungen.id, "
                   "fahrzeuge.name, "
                   "wiegungen.datum, "
+                  "waren.name, "
+                  "lieferanten.name, "
+                  "felder.name, "
                   "wiegungen.brutto, "
                   "wiegungen.tara, "
                   "wiegungen.netto "
-                  "FROM wiegungen, fahrzeuge "
-                  "WHERE wiegungen.fahrzeug = fahrzeuge.id");
+                  "FROM "
+                  "wiegungen, fahrzeuge, lieferanten, felder, waren "
+                  "WHERE "
+                  "wiegungen.fahrzeug = fahrzeuge.id AND "
+                  "wiegungen.ware = waren.id AND "
+                  "wiegungen.lieferant = lieferanten.id AND "
+                  "wiegungen.feld = felder.id "
+                  "ORDER BY wiegungen.id");
 
     if (!query.exec())
     {
+        qDebug() << query.lastError();
         QMessageBox::critical(0, "Database Error", "Kann die Wiegungnen nicht von der Datenbank lesen.");
         return;
     }
@@ -329,9 +346,12 @@ void Database::getWeightings(QVector<StoredWeighting>& weightings)
         weightings.push_back(StoredWeighting(query.value(0).toInt(),
                                              query.value(1).toString(),
                                              QDateTime::fromString(query.value(2).toString(),
-                                                                   "yyyy-MM-dd hh:mm:ss"),
-                                             query.value(3).toInt(),
-                                             query.value(4).toInt(),
-                                             query.value(5).toInt()));
+                                                                   "yyyy-MM-ddThh:mm:ss"),
+                                             query.value(3).toString(),
+                                             query.value(4).toString(),
+                                             query.value(5).toString(),
+                                             query.value(6).toInt(),
+                                             query.value(7).toInt(),
+                                             query.value(8).toInt()));
     }
 }

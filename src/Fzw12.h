@@ -15,7 +15,7 @@ public:
   ~Fzw12(void);
 
 public slots:
-  virtual void start(const Vehicle* vehicle);
+  virtual void start(const Vehicle* vehicle, const int goodId, const int supplierId, const int fieldId);
   virtual void cancel(void);
 
 private slots:

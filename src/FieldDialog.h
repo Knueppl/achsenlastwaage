@@ -20,6 +20,7 @@ public:
     void getAllFieldsFromDatabase(void);
 
     QString selectedField(void) const;
+    int selectedId(void) const;
 
 private slots:
     void selectItem(int index);

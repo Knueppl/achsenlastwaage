@@ -24,6 +24,14 @@ QString FieldDialog::selectedField(void) const
     return _ui->_combo->currentText();
 }
 
+int FieldDialog::selectedId(void) const
+{
+    if (_ui->_combo->currentIndex() == _ui->_combo->count() - 1)
+        return 0;
+
+    return _ui->_combo->currentIndex() + 1;
+}
+
 void FieldDialog::selectItem(int index)
 {
     if (index < 0)

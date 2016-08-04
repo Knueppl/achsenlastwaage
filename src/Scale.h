@@ -16,7 +16,7 @@ public:
     virtual ~Scale(void) { }
 
 public slots:
-    virtual void start(const Vehicle* vehicle);
+    virtual void start(const Vehicle* vehicle, const int good, const int suppliers, const int field);
     virtual void cancel(void);
 
 signals:

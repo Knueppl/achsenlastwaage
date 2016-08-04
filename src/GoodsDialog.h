@@ -22,6 +22,7 @@ public:
     void getAllGoodsFromDatabase(void);
 
     QString selectedGood(void) const;
+    int selectedId(void) const;
 
 private slots:
     void selectItem(int index);

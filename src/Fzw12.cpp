@@ -16,9 +16,9 @@ Fzw12::~Fzw12(void)
 
 }
 
-void Fzw12::start(const Vehicle* vehicle)
+void Fzw12::start(const Vehicle* vehicle, const int goodId, const int supplierId, const int fieldId)
 {
-    Scale::start(vehicle);
+    Scale::start(vehicle, goodId, supplierId, fieldId);
     qDebug() << __PRETTY_FUNCTION__;
 
     m_port->readAll();

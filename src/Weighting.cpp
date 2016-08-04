@@ -10,11 +10,15 @@ Weighting::Weighting(void)
 
 }
 
-void Weighting::start(const Vehicle* vehicle)
+void Weighting::start(const Vehicle* vehicle, const int goodId, const int supplierId, const int fieldId)
 {
     this->clear();
-    _weight = 0;
-    _vehicle = vehicle;
+
+    _weight     = 0;
+    _vehicle    = vehicle;
+    _goodId     = goodId;
+    _supplierId = supplierId;
+    _fieldId    = fieldId;
 }
 
 void Weighting::clear(void)

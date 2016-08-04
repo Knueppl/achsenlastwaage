@@ -20,6 +20,7 @@ public:
     void getAllSuppliersFromDatabase(void);
 
     QString selectedSupplier(void) const;
+    int selectedId(void) const;
 
 private slots:
     void selectItem(int index);

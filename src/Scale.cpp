@@ -2,10 +2,10 @@
 
 #include <QDebug>
 
-void Scale::start(const Vehicle* vehicle)
+void Scale::start(const Vehicle* vehicle, const int good, const int supplier, const int field)
 {
     qDebug() << "scale: start weighting.";
-    _weighting.start(vehicle);
+    _weighting.start(vehicle, good, supplier, field);
     emit this->started();
 }
 
