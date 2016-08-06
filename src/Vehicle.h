@@ -40,6 +40,8 @@ public:
     int            axes(void) const { return _axes;}
     int            tara(void) const { return _tara;}
 
+    void setId(const int id) { _id = id; }
+
 private:
     int     _id;
     QString _name;

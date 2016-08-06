@@ -189,7 +189,7 @@ void Database::getAllVehicles(QVector<Vehicle*>& vehicles)
     }
 }
 
-void Database::addVehicle(const Vehicle* vehicle)
+void Database::addVehicle(Vehicle* vehicle)
 {
     QSqlQuery query(_database);
 
@@ -201,7 +201,19 @@ void Database::addVehicle(const Vehicle* vehicle)
     if (!query.exec())
     {
         QMessageBox::critical(0, "Database Error", "Kann das Fahrzeug nicht zur Datenbank hinzufügen.");
+        return;
     }
+
+    query.prepare(QString("SELECT id FROM fahrzeuge WHERE name = \"") + vehicle->name() + "\"");
+
+    if (!query.exec())
+    {
+        QMessageBox::critical(0, "Database Error", "Kann die des Fahrzeuges nicht ermitteln.");
+        return;
+    }
+
+    query.next();
+    vehicle->setId(query.value(0).toInt());
 }
 
 void Database::getAllGoods(QVector<QString>& goods)

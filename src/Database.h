@@ -25,7 +25,7 @@ public:
     void drop(void);
 
     void getAllVehicles(QVector<Vehicle*>& vehicles);
-    void addVehicle(const Vehicle* vehicle);
+    void addVehicle(Vehicle* vehicle);
 
     void getAllGoods(QVector<QString>& goods);
     void addGood(const QString& good);
