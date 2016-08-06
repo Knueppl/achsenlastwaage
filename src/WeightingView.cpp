@@ -23,6 +23,12 @@ WeightingView::WeightingView(QWidget* parent)
     this->connect(_ui->_pushRefresh, SIGNAL(clicked()), this, SLOT(getAllWeightings()));
 }
 
+void WeightingView::setDatabase (Database &database)
+{
+   _database = &database;
+
+}
+
 void WeightingView::getAllWeightings(void)
 {
     if (!_database)
@@ -48,4 +54,63 @@ void WeightingView::getAllWeightings(void)
         _ui->_table->setItem(row, 7, new QTableWidgetItem(QString::number(weightings[row].tara())));
         _ui->_table->setItem(row, 8, new QTableWidgetItem(QString::number(weightings[row].netto())));
     }
+
+   // Space for tests.
+   this->getSuppliers (-1, -1, -1);
+   this->getFields (-1, -1, -1);
+   this->getGoods (-1, -1, -1);
+   this->getVehicles (-1, -1, -1);
+}
+
+void WeightingView::getSuppliers(const int fieldId, const int goodId, const int vehicleId)
+{
+   QVector<QString> suppliers;
+
+   _database->getSuppliersFromWeightings(suppliers, fieldId, goodId, vehicleId);
+
+   _ui->_comboSupplier->clear();
+
+   for (auto& supplier : suppliers)
+      _ui->_comboSupplier->addItem(supplier);
+
+   _ui->_comboSupplier->addItem("Lieferant");
+}
+
+void WeightingView::getFields(const int supplierId, const int goodId, const int vehicleId)
+{
+   QVector<QString> fields;
+
+   _database->getFieldsFromWeightings (fields, supplierId, goodId, vehicleId);
+   _ui->_comboField->clear();
+
+   for (auto& field : fields)
+      _ui->_comboField->addItem(field);
+
+   _ui->_comboField->addItem("Feld");
+}
+
+void WeightingView::getGoods(const int supplierId, const int fieldId, const int vehicleId)
+{
+   QVector<QString> goods;
+
+   _database->getGoodsFromWeightings(goods, supplierId, fieldId, vehicleId);
+   _ui->_comboGood->clear();
+
+   for (auto& good : goods)
+      _ui->_comboGood->addItem(good);
+
+   _ui->_comboGood->addItem("Ware");
+}
+
+void WeightingView::getVehicles(const int supplierId, const int fieldId, const int goodId)
+{
+   QVector<QString> vehicles;
+
+   _database->getVehiclesFromWeightings (vehicles, supplierId, fieldId, goodId);
+   _ui->_comboVehicle->clear();
+
+   for (auto& vehicle : vehicles)
+      _ui->_comboVehicle->addItem(vehicle);
+
+   _ui->_comboVehicle->addItem("Fahrzeug");
 }

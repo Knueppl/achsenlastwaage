@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>638</width>
+    <width>971</width>
     <height>515</height>
    </rect>
   </property>
@@ -26,8 +26,8 @@
        </property>
        <property name="minimumSize">
         <size>
-         <width>64</width>
-         <height>64</height>
+         <width>48</width>
+         <height>48</height>
         </size>
        </property>
        <property name="maximumSize">
@@ -40,6 +40,24 @@
         <string>Refresh</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="_comboSupplier"/>
+     </item>
+     <item>
+      <widget class="QComboBox" name="_comboField"/>
+     </item>
+     <item>
+      <widget class="QComboBox" name="_comboGood"/>
+     </item>
+     <item>
+      <widget class="QComboBox" name="_comboVehicle"/>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="_lineBegin"/>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="_lineEnd"/>
      </item>
      <item>
       <spacer name="horizontalSpacer">
