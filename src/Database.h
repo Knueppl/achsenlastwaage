@@ -39,21 +39,21 @@ public:
     void addWeighting(const Weighting* weighting);
     void getWeightings(QVector<StoredWeighting>& weightings);
     void getSuppliersFromWeightings(QVector<QString>& suppliers,
-				    const int fieldId,
-				    const int goodId,
-				    const int vehicleId);
+				    const QString& field,
+				    const QString& good,
+				    const QString& vehicle);
     void getGoodsFromWeightings(QVector<QString>& goods,
-				const int supplierId,
-				const int fieldId,
-				const int vehicleId);
+				const QString& supplier,
+				const QString& field,
+				const QString& vehicle);
     void getFieldsFromWeightings(QVector<QString>& fields,
-				 const int supplierId,
-				 const int goodId,
-				 const int vehicleId);
+				 const QString& supplier,
+				 const QString& good,
+				 const QString& vehicle);
     void getVehiclesFromWeightings(QVector<QString>& vehicles,
-				   const int supplierId,
-				   const int fieldId,
-				   const int goodId);
+				   const QString& supplier,
+				   const QString& field,
+				   const QString& good);
 
 private:
     QSqlDatabase _database;

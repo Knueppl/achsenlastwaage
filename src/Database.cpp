@@ -368,36 +368,39 @@ void Database::getWeightings(QVector<StoredWeighting>& weightings)
 }
 
 void Database::getSuppliersFromWeightings(QVector<QString>& suppliers,
-				          const int fieldId,
-				          const int goodId,
-				          const int vehicleId)
+				          const QString& field,
+				          const QString& good,
+				          const QString& vehicle)
 {
    QSqlQuery query(_database);
-   QString queryText("SELECT DISTINCT(lieferanten.name) FROM wiegungen, lieferanten");
+   QString queryText("SELECT DISTINCT(lieferanten.name) FROM wiegungen, lieferanten, felder, waren");
 
-   if (fieldId > 0 || goodId > 0 || vehicleId > 0)
+   if (!field.isEmpty() || !good.isEmpty() || !vehicle.isEmpty())
       queryText += " WHERE ";
 
-   if (fieldId > 0)
+   if (!field.isEmpty())
    {
-      queryText += "wiegungen.feld = ";
-      queryText += QString::number(fieldId);
+      queryText += "wiegungen.feld = felder.id AND felder.name = \"";
+      queryText += field;
+      queryText += "\"";
    }
-   if (goodId > 0)
+   if (!good.isEmpty())
    {
-      if (fieldId > 0)
+      if (!field.isEmpty())
          queryText += " AND ";
 
-      queryText += "wiegungen.ware = ";
-      queryText += QString::number(goodId);
+      queryText += "wiegungen.ware = waren.id AND waren.name = \"";
+      queryText += good;
+      queryText += "\"";
    }
-   if (vehicleId > 0)
+   if (!vehicle.isEmpty())
    {
-      if (fieldId > 0 || goodId > 0)
+      if (!field.isEmpty() || !good.isEmpty())
          queryText += " AND ";
 
-      queryText += "wiegungen.fahrzeug = ";
-      queryText += QString::number(vehicleId);
+      queryText += "wiegungen.fahrzeug = fahrzeuge.id AND fahrzeuge.name = \"";
+      queryText += vehicle;
+      queryText += "\"";
    }
 
    queryText += " ORDER BY lieferanten.id";
@@ -406,6 +409,7 @@ void Database::getSuppliersFromWeightings(QVector<QString>& suppliers,
    if (!query.exec())
    {
       QMessageBox::critical(0, "Database Error", "Kann die Lieferanten nicht bestimmen.");
+      qDebug() << query.lastError();
       return;
    }
 
@@ -414,44 +418,42 @@ void Database::getSuppliersFromWeightings(QVector<QString>& suppliers,
 }
 
 void Database::getFieldsFromWeightings(QVector<QString>& fields,
-		                       const int supplierId,
-				       const int goodId,
-				       const int vehicleId)
+		                       const QString& supplier,
+				       const QString& good,
+				       const QString& vehicle)
 {
    QSqlQuery query(_database);
-   QString queryText("SELECT DISTINCT(felder.name) FROM wiegungen, felder");
+   QString queryText("SELECT DISTINCT(felder.name) FROM wiegungen, felder, waren, fahrzeuge, lieferanten");
 
-   if (supplierId > 0 || goodId > 0 || vehicleId > 0)
-      queryText += " WHERE ";
+   queryText += " WHERE wiegungen.feld = felder.id";
 
-   if (supplierId > 0)
+   if (!supplier.isEmpty())
    {
-      queryText += "wiegungen.lieferant = ";
-      queryText += QString::number(supplierId);
+      queryText += " AND wiegungen.lieferant = lieferanten.id AND lieferanten.name = \"";
+      queryText += supplier;
+      queryText += "\"";
    }
-   if (goodId > 0)
+   if (!good.isEmpty())
    {
-      if (supplierId > 0)
-         queryText += " AND ";
-
-      queryText += "wiegungen.ware = ";
-      queryText += QString::number(goodId);
+      queryText += " AND wiegungen.ware = waren.id ANS waren.name = \"";
+      queryText += good;
+      queryText += "\"";
    }
-   if (vehicleId > 0)
+   if (!vehicle.isEmpty())
    {
-      if (supplierId > 0 || goodId > 0)
-         queryText += " AND ";
-
-      queryText += "wiegungen.fahrzeug = ";
-      queryText += QString::number(vehicleId);
+      queryText += " AND wiegungen.fahrzeug = fahrzeuge.id AND fahrzeuge.name = \"";
+      queryText += vehicle;
+      queryText += "\"";
    }
 
    queryText += " ORDER BY felder.id";
+   qDebug() << queryText;
    query.prepare(queryText);
 
    if (!query.exec())
    {
       QMessageBox::critical(0, "Database Error", "Kann die Felder nicht bestimmen.");
+      qDebug() << query.lastError();
       return;
    }
 
@@ -460,36 +462,32 @@ void Database::getFieldsFromWeightings(QVector<QString>& fields,
 }
 
 void Database::getGoodsFromWeightings(QVector<QString>& goods,
-				      const int supplierId,
-				      const int fieldId,
-				      const int vehicleId)
+				      const QString& supplier,
+				      const QString& field,
+				      const QString& vehicle)
 {
    QSqlQuery query(_database);
-   QString queryText("SELECT DISTINCT(waren.name) FROM wiegungen, waren");
+   QString queryText("SELECT DISTINCT(waren.name) FROM wiegungen, waren, felder, fahrzeuge, lieferanten");
 
-   if (fieldId > 0 || supplierId > 0 || vehicleId > 0)
-      queryText += " WHERE ";
+   queryText += " WHERE wiegungen.ware = waren.id";
 
-   if (fieldId > 0)
+   if (!field.isEmpty())
    {
-      queryText += "wiegungen.feld = ";
-      queryText += QString::number(fieldId);
+      queryText += " AND wiegungen.feld = felder.id AND felder.name = \"";
+      queryText += field;
+      queryText += "\"";
    }
-   if (supplierId > 0)
+   if (!supplier.isEmpty())
    {
-      if (fieldId > 0)
-         queryText += " AND ";
-
-      queryText += "wiegungen.lieferant = ";
-      queryText += QString::number(supplierId);
+      queryText += " AND wiegungen.lieferant = lieferanten.id AND lieferanten.name = \"";
+      queryText += supplier;
+      queryText += "\"";
    }
-   if (vehicleId > 0)
+   if (!vehicle.isEmpty())
    {
-      if (fieldId > 0 || supplierId > 0)
-         queryText += " AND ";
-
-      queryText += "wiegungen.fahrzeug = ";
-      queryText += QString::number(vehicleId);
+      queryText += " AND wiegungen.fahrzeug = fahrzeuge.id AND fahrzeuge.name = \"";
+      queryText += vehicle;
+      queryText += "\"";
    }
 
    queryText += " ORDER BY waren.id";
@@ -506,36 +504,32 @@ void Database::getGoodsFromWeightings(QVector<QString>& goods,
 }
 
 void Database::getVehiclesFromWeightings(QVector<QString>& vehicles,
-				         const int supplierId,
-				         const int fieldId,
-				         const int goodId)
+				         const QString& supplier,
+				         const QString& field,
+				         const QString& good)
 {
    QSqlQuery query(_database);
-   QString queryText("SELECT DISTINCT(fahrzeuge.name) FROM wiegungen, fahrzeuge");
+   QString queryText("SELECT DISTINCT(fahrzeuge.name) FROM wiegungen, fahrzeuge, felder, waren, lieferanten");
 
-   if (fieldId > 0 || goodId > 0 || supplierId > 0)
-      queryText += " WHERE ";
+   queryText += " WHERE wiegungen.fahrzeug = fahrzeuge.id";
 
-   if (fieldId > 0)
+   if (!field.isEmpty())
    {
-      queryText += "wiegungen.feld = ";
-      queryText += QString::number(fieldId);
+      queryText += " AND wiegungen.feld = felder.id AND felder.name = \"";
+      queryText += field;
+      queryText += "\"";
    }
-   if (goodId > 0)
+   if (!good.isEmpty())
    {
-      if (fieldId > 0)
-         queryText += " AND ";
-
-      queryText += "wiegungen.ware = ";
-      queryText += QString::number(goodId);
+      queryText += " AND wiegungen.ware = waren.id AND waren.name = \"";
+      queryText += good;
+      queryText += "\"";
    }
-   if (supplierId > 0)
+   if (!supplier.isEmpty())
    {
-      if (fieldId > 0 || goodId > 0)
-         queryText += " AND ";
-
-      queryText += "wiegungen.lieferant = ";
-      queryText += QString::number(supplierId);
+      queryText += " AND wiegungen.lieferant = lieferanten.id AND lieferanten.name = \"";
+      queryText += supplier;
+      queryText += "\"";
    }
 
    queryText += " ORDER BY fahrzeuge.id";
@@ -544,6 +538,7 @@ void Database::getVehiclesFromWeightings(QVector<QString>& vehicles,
    if (!query.exec())
    {
       QMessageBox::critical(0, "Database Error", "Kann die Fahrzeuge nicht bestimmen.");
+      qDebug() << query.lastError();
       return;
    }
 

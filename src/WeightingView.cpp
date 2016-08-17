@@ -21,6 +21,10 @@ WeightingView::WeightingView(QWidget* parent)
     _ui->_table->setHorizontalHeaderItem(8, new QTableWidgetItem("Netto"));
 
     this->connect(_ui->_pushRefresh, SIGNAL(clicked()), this, SLOT(getAllWeightings()));
+    this->connect(_ui->_comboSupplier,
+                  SIGNAL(currentIndexChanged(int)),
+                  this,
+                  SLOT(supplierFilterHasBeenChanged(int)));
 }
 
 void WeightingView::setDatabase (Database &database)
@@ -56,61 +60,75 @@ void WeightingView::getAllWeightings(void)
     }
 
    // Space for tests.
-   this->getSuppliers (-1, -1, -1);
-   this->getFields (-1, -1, -1);
-   this->getGoods (-1, -1, -1);
-   this->getVehicles (-1, -1, -1);
+   this->getSuppliers ();
+   this->getFields ();
+   this->getGoods ();
+   this->getVehicles ();
 }
 
-void WeightingView::getSuppliers(const int fieldId, const int goodId, const int vehicleId)
+void WeightingView::supplierFilterHasBeenChanged (int)
 {
+   const QString supplier = _ui->_comboSupplier->currentIndex() > 0 ? _ui->_comboSupplier->currentText() : "";
+   const QString field = _ui->_comboField->currentIndex() > 0 ? _ui->_comboField->currentText() : "";
+   const QString good = _ui->_comboGood->currentIndex() > 0 ? _ui->_comboGood->currentText() : "";
+   const QString vehicle = _ui->_comboVehicle->currentIndex() > 0 ? _ui->_comboVehicle->currentText() : "";
+
+   if (!_ui->_comboField->currentIndex())
+      this->getFields (supplier, good, vehicle);
+   if (!_ui->_comboGood->currentIndex())
+      this->getGoods (supplier, field, vehicle);
+   if (!_ui->_comboVehicle->currentIndex())
+      this->getVehicles (supplier, field, good);
+}
+
+void WeightingView::getSuppliers(const QString& field, const QString& good, const QString& vehicle)
+{
+   qDebug() << __PRETTY_FUNCTION__;
+   qDebug() << field << good << vehicle;
    QVector<QString> suppliers;
 
-   _database->getSuppliersFromWeightings(suppliers, fieldId, goodId, vehicleId);
+   _database->getSuppliersFromWeightings(suppliers, field, good, vehicle);
 
    _ui->_comboSupplier->clear();
+   _ui->_comboSupplier->addItem("Lieferant");
 
    for (auto& supplier : suppliers)
       _ui->_comboSupplier->addItem(supplier);
-
-   _ui->_comboSupplier->addItem("Lieferant");
 }
 
-void WeightingView::getFields(const int supplierId, const int goodId, const int vehicleId)
+void WeightingView::getFields(const QString& supplier, const QString& good, const QString& vehicle)
 {
    QVector<QString> fields;
 
-   _database->getFieldsFromWeightings (fields, supplierId, goodId, vehicleId);
+   _database->getFieldsFromWeightings (fields, supplier, good, vehicle);
    _ui->_comboField->clear();
+   _ui->_comboField->addItem("Feld");
+
 
    for (auto& field : fields)
       _ui->_comboField->addItem(field);
-
-   _ui->_comboField->addItem("Feld");
 }
 
-void WeightingView::getGoods(const int supplierId, const int fieldId, const int vehicleId)
+void WeightingView::getGoods(const QString& supplier, const QString& field, const QString& vehicle)
 {
    QVector<QString> goods;
 
-   _database->getGoodsFromWeightings(goods, supplierId, fieldId, vehicleId);
+   _database->getGoodsFromWeightings(goods, supplier, field, vehicle);
    _ui->_comboGood->clear();
+   _ui->_comboGood->addItem("Ware");
 
    for (auto& good : goods)
       _ui->_comboGood->addItem(good);
-
-   _ui->_comboGood->addItem("Ware");
 }
 
-void WeightingView::getVehicles(const int supplierId, const int fieldId, const int goodId)
+void WeightingView::getVehicles(const QString& supplier, const QString& field, const QString& good)
 {
    QVector<QString> vehicles;
 
-   _database->getVehiclesFromWeightings (vehicles, supplierId, fieldId, goodId);
+   _database->getVehiclesFromWeightings (vehicles, supplier, field, good);
    _ui->_comboVehicle->clear();
+   _ui->_comboVehicle->addItem("Fahrzeug");
 
    for (auto& vehicle : vehicles)
       _ui->_comboVehicle->addItem(vehicle);
-
-   _ui->_comboVehicle->addItem("Fahrzeug");
 }
