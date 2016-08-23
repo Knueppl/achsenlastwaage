@@ -34,6 +34,7 @@ private:
     QVector<Vehicle*> _vehicles;
     QVector<QAction*> _startWeighting;
     QMenu* _menuStartWeighting;
+    QMenu* _menuManualInput;
 
     static MainWindow* s_instance;
 
@@ -42,6 +43,7 @@ private slots:
     void selectDatabase(void);
     void startWeighting(void);
     void stopWeighting(Weighting*);
+    void manualWeighting(void);
 };
 
 #endif

@@ -20,11 +20,12 @@ public:
 
 public slots:
     void getAllWeightings(void);
+    void filterHasBeenChanged(int index);
     void supplierFilterHasBeenChanged(int index);
-/*    void fieldFilterHasBeenChanged(int index);
+    void fieldFilterHasBeenChanged(int index);
     void goodFilterHasBeenChanged(int index);
     void vehicleFilterHasBeenChanged(int index);
-*/
+
 private:
     void getSuppliers(const QString& field = QString(),
 		      const QString& good = QString(),
@@ -37,7 +38,7 @@ private:
 		  const QString& vehicle = QString());
     void getVehicles(const QString& supplier = QString(),
 		     const QString& field = QString(),
-		     const QString& vehicle = QString());
+		     const QString& good = QString());
 
     Ui::WeightingView* _ui;
     Database* _database;

@@ -3,6 +3,7 @@
 #include "CreateVehicleDialog.h"
 #include "DatabaseDialog.h"
 #include "Fzw12.h"
+#include "ManualInputWidget.h"
 
 #include <QDebug>
 
@@ -133,4 +134,9 @@ void MainWindow::stopWeighting(Weighting* weighting)
 
     if (weighting && weighting->valid())
         _database.addWeighting(weighting);
+}
+
+void MainWindow::manualWeighting(void)
+{
+
 }

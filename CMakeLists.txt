@@ -43,6 +43,7 @@ qt4_wrap_ui(MOC_FORMS
             ${FORM_DIR}/DummyScaleWidget.ui
             ${FORM_DIR}/DatabaseCombo.ui
             ${FORM_DIR}/WeightingView.ui
+            ${FORM_DIR}/ManualInputWidget.ui
             )
 
 qt4_add_resources(RESOURCES
@@ -69,6 +70,7 @@ set(SRC ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/Fzw12.cpp
         ${SRC_DIR}/SerialPort.cpp
         ${SRC_DIR}/WeightingView.cpp
+        ${SRC_DIR}/ManualInputWidget.cpp
         ${SRC_DIR}/achsenlastwaage.cpp
         ${RESOURCES}
         ${MOC_SOURCES}

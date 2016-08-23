@@ -372,8 +372,13 @@ void Database::getSuppliersFromWeightings(QVector<QString>& suppliers,
 				          const QString& good,
 				          const QString& vehicle)
 {
+    qDebug();
+    qDebug() << __PRETTY_FUNCTION__;
+    qDebug() << "field = " << field;
+    qDebug() << "good = " << good;
+    qDebug() << "vehicle = " << vehicle;
    QSqlQuery query(_database);
-   QString queryText("SELECT DISTINCT(lieferanten.name) FROM wiegungen, lieferanten, felder, waren");
+   QString queryText("SELECT DISTINCT(lieferanten.name) FROM wiegungen, lieferanten, felder, waren, fahrzeuge");
 
    if (!field.isEmpty() || !good.isEmpty() || !vehicle.isEmpty())
       queryText += " WHERE ";
@@ -405,6 +410,7 @@ void Database::getSuppliersFromWeightings(QVector<QString>& suppliers,
 
    queryText += " ORDER BY lieferanten.id";
    query.prepare(queryText);
+   qDebug() << queryText;
 
    if (!query.exec())
    {
@@ -422,6 +428,10 @@ void Database::getFieldsFromWeightings(QVector<QString>& fields,
 				       const QString& good,
 				       const QString& vehicle)
 {
+    qDebug() << __PRETTY_FUNCTION__;
+    qDebug() << "supplier = " << supplier;
+    qDebug() << "good = " << good;
+    qDebug() << "vehicle = " << vehicle;
    QSqlQuery query(_database);
    QString queryText("SELECT DISTINCT(felder.name) FROM wiegungen, felder, waren, fahrzeuge, lieferanten");
 
@@ -435,7 +445,7 @@ void Database::getFieldsFromWeightings(QVector<QString>& fields,
    }
    if (!good.isEmpty())
    {
-      queryText += " AND wiegungen.ware = waren.id ANS waren.name = \"";
+      queryText += " AND wiegungen.ware = waren.id AND waren.name = \"";
       queryText += good;
       queryText += "\"";
    }
@@ -466,6 +476,10 @@ void Database::getGoodsFromWeightings(QVector<QString>& goods,
 				      const QString& field,
 				      const QString& vehicle)
 {
+    qDebug() << __PRETTY_FUNCTION__;
+    qDebug() << "supplier = " << supplier;
+    qDebug() << "field = " << field;
+    qDebug() << "vehicle = " << vehicle;
    QSqlQuery query(_database);
    QString queryText("SELECT DISTINCT(waren.name) FROM wiegungen, waren, felder, fahrzeuge, lieferanten");
 
@@ -492,6 +506,7 @@ void Database::getGoodsFromWeightings(QVector<QString>& goods,
 
    queryText += " ORDER BY waren.id";
    query.prepare(queryText);
+   qDebug() << queryText;
 
    if (!query.exec())
    {
@@ -508,6 +523,7 @@ void Database::getVehiclesFromWeightings(QVector<QString>& vehicles,
 				         const QString& field,
 				         const QString& good)
 {
+    qDebug() << __PRETTY_FUNCTION__;
    QSqlQuery query(_database);
    QString queryText("SELECT DISTINCT(fahrzeuge.name) FROM wiegungen, fahrzeuge, felder, waren, lieferanten");
 
