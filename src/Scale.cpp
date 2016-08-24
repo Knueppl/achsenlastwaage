@@ -25,6 +25,7 @@ void Scale::setNextAxisWeight(const int kg)
     if (_weighting.finished())
     {
         qDebug() << "scale: weighting finished.";
+        // Maybe a memory leak.
         emit this->finished(new Weighting(_weighting));
     }
 }

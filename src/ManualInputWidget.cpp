@@ -4,9 +4,14 @@
 
 #include <QDebug>
 
-ManualInputWidget::ManualInputWidget(const Vehicle* vehicle, QWidget* parnet)
+ManualInputWidget::ManualInputWidget(const Vehicle* vehicle,
+                                     const int goodId,
+                                     const int supplierId,
+                                     const int fieldId,
+                                     QWidget* parnet)
     : QDialog(parnet),
-      _ui(new Ui::ManualInputWidget)
+      _ui(new Ui::ManualInputWidget),
+      _weighting(new Weighting)
 {
     _ui->setupUi(this);
 
@@ -41,4 +46,25 @@ ManualInputWidget::ManualInputWidget(const Vehicle* vehicle, QWidget* parnet)
 
     _ui->_labelVehicle->setFont(QFont("Euro Plate", 24, QFont::Normal));
     _ui->_labelVehicle->setText(vehicle->name());
+
+    this->connect(_ui->_buttonAdd, SIGNAL(clicked()), this, SLOT(createWeighting()));
+    this->connect(_ui->_buttonCancel, SIGNAL(clicked()), this, SLOT(reject()));
+
+    // Start weighting...
+    _weighting->start(vehicle, goodId, supplierId, fieldId);
+}
+
+ManualInputWidget::~ManualInputWidget(void)
+{
+    delete _weighting;
+}
+
+void ManualInputWidget::createWeighting(void)
+{
+    *_weighting << _ui->_spinBrutto->value();
+
+    while (!_weighting->valid())
+        *_weighting << 0;
+
+    this->accept();
 }

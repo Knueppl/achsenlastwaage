@@ -31,6 +31,7 @@ set(MOC_HEADERS ${SRC_DIR}/SupplierDialog.h
                 ${SRC_DIR}/WeightingScene.h
                 ${SRC_DIR}/Fzw12.h
                 ${SRC_DIR}/WeightingView.h
+                ${SRC_DIR}/ManualInputWidget.h
                 )
 
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})

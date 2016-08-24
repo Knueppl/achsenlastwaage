@@ -33,6 +33,7 @@ MainWindow::MainWindow(void)
     QMenuBar* bar = this->menuBar();
     QMenu* menu = bar->addMenu("Fahrzeuge");
     _menuStartWeighting = menu->addMenu("Starte Wiegung");
+    _menuManualInput = menu->addMenu("Manuelle Wiegung");
     menu->addAction("Hinzufügen", this, SLOT(addVehicle()));
 
     menu = bar->addMenu("Datenbank");
@@ -61,7 +62,7 @@ void MainWindow::getAllVehiclesFromDatabase(void)
 
     for (QVector<Vehicle*>::const_iterator vehicle(_vehicles.begin()); vehicle < _vehicles.end(); ++vehicle)
     {
-        // To do: connect the action with start weighting slot.
+        // It is for start a weighting.
         QAction* action = new QAction((**vehicle).name(), _menuStartWeighting);
         QVariant data(QVariant::fromValue(*vehicle));
 
@@ -70,17 +71,24 @@ void MainWindow::getAllVehiclesFromDatabase(void)
         action->setData(data);
         _menuStartWeighting->addAction(action);
         _ui->_vehicleStack->addVehicle(action);
+
+        // It is for manual input.
+        action = new QAction((**vehicle).name(), _menuManualInput);
+        action->setData(data);
+        _menuManualInput->addAction(action);
+
+        this->connect(action, SIGNAL(triggered()), this, SLOT(manualWeighting()));
     }
 }
 
 void MainWindow::addVehicle(void)
 {
-    CreateVehicleDialog dialog;
+    CreateVehicleDialog dialog(this);
 
     if (dialog.exec() != QDialog::Accepted)
         return;
 
-    // To do: connect the action with start weighting slot.
+    // It is for the weighting stuff.
     QAction* action = new QAction(dialog.vehicle()->name(), _menuStartWeighting);
     QVariant data(QVariant::fromValue(dialog.vehicle()));
 
@@ -91,6 +99,12 @@ void MainWindow::addVehicle(void)
     this->connect(action, SIGNAL(triggered()), _ui->_scale, SLOT(start()));
     _menuStartWeighting->addAction(action);
     _ui->_vehicleStack->addVehicle(action);
+
+
+    // It is for the manual input.
+    action = new QAction(dialog.vehicle()->name(), _menuManualInput);
+    _menuManualInput->addAction(action);
+    this->connect(action, SIGNAL(triggered()), this, SLOT(manualWeighting()));
 }
 
 void MainWindow::selectDatabase(void)
@@ -123,6 +137,7 @@ void MainWindow::startWeighting(void)
     }
 
     _menuStartWeighting->setDisabled(true);
+    _menuManualInput->setDisabled(true);
     _ui->_vehicleStack->setDisabled(true);
     _scale->start(vehicle, _ui->_goods->selectedId(), _ui->_suppliers->selectedId(), _ui->_fields->selectedId());
 }
@@ -130,13 +145,54 @@ void MainWindow::startWeighting(void)
 void MainWindow::stopWeighting(Weighting* weighting)
 {
     _menuStartWeighting->setEnabled(true);
+    _menuManualInput->setEnabled(true);
     _ui->_vehicleStack->setDisabled(false);
 
+    // Here is a memory leak!!!!
     if (weighting && weighting->valid())
         _database.addWeighting(weighting);
 }
 
 void MainWindow::manualWeighting(void)
 {
+    qDebug() << __PRETTY_FUNCTION__;
 
+    _menuStartWeighting->setDisabled(true);
+    _menuManualInput->setDisabled(true);
+    _ui->_vehicleStack->setDisabled(true);
+
+    // Check if the sender is an action.
+    QAction* action = qobject_cast<QAction*>(this->sender());
+
+    if (!action)
+    {
+        qDebug() << __PRETTY_FUNCTION__ << ": !action --> return";
+        return;
+    }
+
+    // Check if the action contains a vehicle as action.
+    Vehicle* vehicle = dynamic_cast<Vehicle*>(action->data().value<Vehicle*>());
+
+    if (!vehicle)
+    {
+        qDebug() << __PRETTY_FUNCTION__ << ": !vehicle --> return";
+        return;
+    }
+
+
+    // Execute the manual input dialog.
+    ManualInputWidget dialog(vehicle,
+                             _ui->_goods->selectedId(),
+                             _ui->_suppliers->selectedId(),
+                             _ui->_fields->selectedId(),
+                             this);
+
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        _database.addWeighting(dialog.getWeighting());
+    }
+
+    _menuStartWeighting->setEnabled(true);
+    _menuManualInput->setEnabled(true);
+    _ui->_vehicleStack->setDisabled(false);
 }
