@@ -56,6 +56,8 @@ public:
 				   const QString& good);
 
 private:
+    bool checkIfTablesExits(const QString&  database);
+
     QSqlDatabase _database;
 };
 

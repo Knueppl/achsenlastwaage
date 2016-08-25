@@ -35,6 +35,7 @@ private:
     QVector<QAction*> _startWeighting;
     QMenu* _menuStartWeighting;
     QMenu* _menuManualInput;
+    QAction* _cancelWeighting;
 
     static MainWindow* s_instance;
 

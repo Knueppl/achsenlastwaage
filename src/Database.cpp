@@ -49,9 +49,47 @@ QVector<QString> Database::databases(void)
     QVector<QString> bases;
 
     while (query.next())
-        bases.push_back(query.value(0).toString());
+        if (this->checkIfTablesExits(query.value(0).toString()))
+            bases.push_back(query.value(0).toString());
 
     return bases;
+}
+
+bool Database::checkIfTablesExits(const QString& database)
+{
+    this->selectDatabase(database);
+
+    // Query all tables in the selected database.
+    QSqlQuery query;
+
+    query.prepare("SHOW TABLES");
+
+    if (!query.exec())
+        QMessageBox::critical(0, "Database Error", query.lastError().text());
+
+
+    // Check if all necessary tables are there.
+    bool vehicles = false, fields = false, suppliers = false, goods = false, weightings = false;
+
+    while (query.next())
+    {
+        const QString table(query.value(0).toString());
+
+        if (table == "fahrzeuge")
+            vehicles = true;
+        else if (table == "felder")
+            fields = true;
+        else if (table == "lieferanten")
+            suppliers = true;
+        else if (table == "waren")
+            goods = true;
+        else if (table == "wiegungen")
+            weightings = true;
+    }
+
+    this->disconnect();
+
+    return vehicles && fields && suppliers && goods && weightings;
 }
 
 void Database::createDatabase(const QString& database)

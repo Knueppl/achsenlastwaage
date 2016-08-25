@@ -31,10 +31,12 @@ MainWindow::MainWindow(void)
 
     /* Create menus. */
     QMenuBar* bar = this->menuBar();
-    QMenu* menu = bar->addMenu("Fahrzeuge");
+    QMenu* menu = bar->addMenu("Befehl");
     _menuStartWeighting = menu->addMenu("Starte Wiegung");
     _menuManualInput = menu->addMenu("Manuelle Wiegung");
-    menu->addAction("Hinzufügen", this, SLOT(addVehicle()));
+    _cancelWeighting = menu->addAction("Wiegung abbrechen", _scale, SLOT(cancel()));
+    _cancelWeighting->setDisabled(true);
+    menu->addAction("Fahrzeug hinzufügen", this, SLOT(addVehicle()));
 
     menu = bar->addMenu("Datenbank");
     menu->addAction("Auswählen", this, SLOT(selectDatabase()));
@@ -139,6 +141,7 @@ void MainWindow::startWeighting(void)
     _menuStartWeighting->setDisabled(true);
     _menuManualInput->setDisabled(true);
     _ui->_vehicleStack->setDisabled(true);
+    _cancelWeighting->setEnabled(true);
     _scale->start(vehicle, _ui->_goods->selectedId(), _ui->_suppliers->selectedId(), _ui->_fields->selectedId());
 }
 
@@ -147,6 +150,7 @@ void MainWindow::stopWeighting(Weighting* weighting)
     _menuStartWeighting->setEnabled(true);
     _menuManualInput->setEnabled(true);
     _ui->_vehicleStack->setDisabled(false);
+    _cancelWeighting->setDisabled(true);
 
     // Here is a memory leak!!!!
     if (weighting && weighting->valid())
