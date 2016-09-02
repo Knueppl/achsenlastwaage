@@ -18,6 +18,7 @@ public:
 
 private slots:
     void chooseDatabase(int index);
+    void selectCurrentDatabase(void);
 
 private:
     void showDatabases(void);

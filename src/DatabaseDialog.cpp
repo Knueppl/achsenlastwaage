@@ -13,7 +13,7 @@ DatabaseDialog::DatabaseDialog(Database& database, QWidget* parent)
 
     _ui->_pushAccept->setDefault(true);
     this->showDatabases();
-    this->connect(_ui->_pushAccept, SIGNAL(clicked()), this, SLOT(accept()));
+    this->connect(_ui->_pushAccept, SIGNAL(clicked()), this, SLOT(selectCurrentDatabase()));
     this->connect(_ui->_comboDatabases, SIGNAL(currentIndexChanged(int)), this, SLOT(chooseDatabase(int)));
     this->connect(_ui->_pushCancel, SIGNAL(clicked()), this, SLOT(reject()));
 
@@ -39,16 +39,17 @@ void DatabaseDialog::chooseDatabase(int index)
             if (dialog.text().isEmpty())
                 return;
 
-            qDebug() << "create database: " << dialog.text();
             _database.createDatabase(dialog.text());
             this->showDatabases();
             _database.selectDatabase(_ui->_comboDatabases->currentText());
-            this->accept();
         }
 
         return;
     }
+}
 
+void DatabaseDialog::selectCurrentDatabase(void)
+{
     _database.selectDatabase(_ui->_comboDatabases->currentText());
     this->accept();
 }

@@ -70,6 +70,9 @@ void WeightingView::getAllWeightings(void)
         _ui->_table->setItem(row, 8, new QTableWidgetItem(QString::number(weightings[row].netto())));
     }
 
+    // Select the last row.
+    _ui->_table->selectRow(_ui->_table->rowCount() - 1);
+
    // Space for tests.
    this->getSuppliers ();
    this->getFields ();
@@ -79,7 +82,6 @@ void WeightingView::getAllWeightings(void)
 
 void WeightingView::filterHasBeenChanged(int)
 {
-    qDebug() << __PRETTY_FUNCTION__;
     const QString supplier = _ui->_comboSupplier->currentIndex() > 0 ? _ui->_comboSupplier->currentText() : "";
     const QString field = _ui->_comboField->currentIndex() > 0 ? _ui->_comboField->currentText() : "";
     const QString good = _ui->_comboGood->currentIndex() > 0 ? _ui->_comboGood->currentText() : "";
@@ -110,36 +112,6 @@ void WeightingView::filterHasBeenChanged(int)
         this->getFields(supplier, good, vehicle);
         this->getGoods(supplier, field, vehicle);
     }
-}
-
-void WeightingView::supplierFilterHasBeenChanged (int)
-{
-    const QString supplier = _ui->_comboSupplier->currentText();
-    const QString field = _ui->_comboField->currentText();
-    const QString good = _ui->_comboGood->currentText();
-    const QString vehicle = _ui->_comboVehicle->currentText();
-
-    if (!_ui->_comboField->currentIndex())
-        this->getFields (supplier, good, vehicle);
-    if (!_ui->_comboGood->currentIndex())
-        this->getGoods (supplier, field, vehicle);
-    if (!_ui->_comboVehicle->currentIndex())
-        this->getVehicles (supplier, field, good);
-}
-
-void WeightingView::fieldFilterHasBeenChanged(int)
-{
-
-}
-
-void WeightingView::goodFilterHasBeenChanged(int)
-{
-
-}
-
-void WeightingView::vehicleFilterHasBeenChanged(int)
-{
-
 }
 
 void WeightingView::getSuppliers(const QString& field, const QString& good, const QString& vehicle)

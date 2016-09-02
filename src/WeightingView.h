@@ -21,10 +21,6 @@ public:
 public slots:
     void getAllWeightings(void);
     void filterHasBeenChanged(int index);
-    void supplierFilterHasBeenChanged(int index);
-    void fieldFilterHasBeenChanged(int index);
-    void goodFilterHasBeenChanged(int index);
-    void vehicleFilterHasBeenChanged(int index);
 
 private:
     void getSuppliers(const QString& field = QString(),

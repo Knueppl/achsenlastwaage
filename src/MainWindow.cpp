@@ -119,6 +119,7 @@ void MainWindow::selectDatabase(void)
         _ui->_goods->getAllGoodsFromDatabase();
         _ui->_suppliers->getAllSuppliersFromDatabase();
         _ui->_fields->getAllFieldsFromDatabase();
+        _ui->_weightingView->getAllWeightings();
     }
 }
 
@@ -157,7 +158,12 @@ void MainWindow::stopWeighting(Weighting* weighting)
 
     // Here is a memory leak!!!!
     if (weighting && weighting->valid())
+    {
         _database.addWeighting(weighting);
+        delete weighting; // HACK!!!
+    }
+
+    _ui->_weightingView->getAllWeightings();
 }
 
 void MainWindow::manualWeighting(void)
