@@ -56,5 +56,6 @@ void Fzw12::stop(Weighting*)
 
 void Fzw12::cancel(void)
 {
+    Scale::cancel();
     m_timer.stop();
 }

@@ -4,7 +4,7 @@
 
 SerialPort::SerialPort(const char* port)
 {
-    if ((m_portRef = open(port, O_RDWR | O_NOCTTY | O_NDELAY)) < 0)
+    if ((m_portRef = ::open(port, O_RDWR | O_NOCTTY | O_NDELAY)) < 0)
     {
         std::cout << "Kann PORT nicht öffnen!" << std::endl;
     }
@@ -17,7 +17,7 @@ SerialPort::SerialPort(const char* port)
 
 SerialPort::~SerialPort(void)
 {
-    close(m_portRef);
+    ::close(m_portRef);
 }
 
 int SerialPort::read(void)
@@ -58,19 +58,13 @@ void SerialPort::init(speed_t speed)
 {
     struct termios options;
 
-    /*
-     * Get the current options for the port...
-     */
-
+    // Get the current options for the port...
     tcgetattr(m_portRef, &options);
 
     cfsetispeed(&options, speed);
     cfsetospeed(&options, speed);
 
-    /*
-     * Enable the receiver and set local mode...
-     */
-
+    // Enable the receiver and set local mode...
     options.c_cflag |= (CLOCAL | CREAD);
 
     options.c_cflag &= ~PARENB;
@@ -78,9 +72,6 @@ void SerialPort::init(speed_t speed)
     options.c_cflag &= ~CSIZE;
     options.c_cflag |= CS8;
 
-    /*
-     * Set the new options for the port...
-     */
-
+    // Set the new options for the port...
     tcsetattr(m_portRef, TCSANOW, &options);
 }

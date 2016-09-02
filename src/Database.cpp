@@ -164,12 +164,14 @@ void Database::createDatabase(const QString& database)
         QMessageBox::critical(0, "Database Error", query.lastError().text());
 
 
-    // Add some default goods.
-//    this->addGood("Mais");
-//    this->addGood("Triticale");
+    // Add the default goods.
+    this->addGood("Keine Ware");
 
-    // Add a default supplier.
-//    this->addSupplier("Merkl");
+    // Add the default supplier.
+    this->addSupplier("Kein Lieferant");
+
+    // Add the default field
+    this->addField("Kein Feld");
 }
 
 void Database::save(const QString& fileName)

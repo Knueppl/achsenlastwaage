@@ -2,6 +2,8 @@
 #include "ui_DatabaseDialog.h"
 #include "CreateTextDialog.h"
 
+#include <QDebug>
+
 DatabaseDialog::DatabaseDialog(Database& database, QWidget* parent)
     : QDialog(parent),
       _ui(new Ui::DatabaseDialog),
@@ -14,6 +16,13 @@ DatabaseDialog::DatabaseDialog(Database& database, QWidget* parent)
     this->connect(_ui->_pushAccept, SIGNAL(clicked()), this, SLOT(accept()));
     this->connect(_ui->_comboDatabases, SIGNAL(currentIndexChanged(int)), this, SLOT(chooseDatabase(int)));
     this->connect(_ui->_pushCancel, SIGNAL(clicked()), this, SLOT(reject()));
+
+    // If their is no valid database, create one without the choose database dialog.
+    if (_ui->_comboDatabases->count() == 1)
+    {
+        _database.selectDatabase("information_schema");
+        this->chooseDatabase(0);
+    }
 }
 
 void DatabaseDialog::chooseDatabase(int index)
@@ -30,15 +39,18 @@ void DatabaseDialog::chooseDatabase(int index)
             if (dialog.text().isEmpty())
                 return;
 
+            qDebug() << "create database: " << dialog.text();
             _database.createDatabase(dialog.text());
             this->showDatabases();
             _database.selectDatabase(_ui->_comboDatabases->currentText());
+            this->accept();
         }
 
         return;
     }
 
     _database.selectDatabase(_ui->_comboDatabases->currentText());
+    this->accept();
 }
 
 void DatabaseDialog::showDatabases(void)

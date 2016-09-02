@@ -112,11 +112,14 @@ void MainWindow::addVehicle(void)
 void MainWindow::selectDatabase(void)
 {
     DatabaseDialog dialog(_database, this);
-    dialog.exec();
-    this->getAllVehiclesFromDatabase();
-    _ui->_goods->getAllGoodsFromDatabase();
-    _ui->_suppliers->getAllSuppliersFromDatabase();
-    _ui->_fields->getAllFieldsFromDatabase();
+
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        this->getAllVehiclesFromDatabase();
+        _ui->_goods->getAllGoodsFromDatabase();
+        _ui->_suppliers->getAllSuppliersFromDatabase();
+        _ui->_fields->getAllFieldsFromDatabase();
+    }
 }
 
 void MainWindow::startWeighting(void)
