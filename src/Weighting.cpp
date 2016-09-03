@@ -5,7 +5,8 @@
 Weighting::Weighting(void)
     : _vehicle(new Vehicle),
       _weight(-1),
-      _finished(false)
+      _finished(false),
+      _valid(false)
 {
 
 }
@@ -23,15 +24,11 @@ void Weighting::start(const Vehicle* vehicle, const int goodId, const int suppli
 
 void Weighting::clear(void)
 {
+    _valid = false;
     _finished = false;
     _weights.clear();
     _weight = -1;
     _vehicle = 0;
-}
-
-bool Weighting::valid(void) const
-{
-    return _finished && _weights.size() >= _vehicle->axes();
 }
 
 Weighting& Weighting::operator<<(const int kg)

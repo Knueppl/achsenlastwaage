@@ -4,6 +4,7 @@
 #include "DatabaseDialog.h"
 #include "Fzw12.h"
 #include "ManualInputWidget.h"
+#include "CheckWeightingDialog.h"
 
 #include <QDebug>
 
@@ -158,10 +159,17 @@ void MainWindow::stopWeighting(Weighting* weighting)
     _cancelWeighting->setDisabled(true);
 
     // Here is a memory leak!!!!
-    if (weighting && weighting->valid())
+    if (weighting && weighting->finished())
     {
-        _database.addWeighting(weighting);
-        delete weighting; // HACK!!!
+        CheckWeightingDialog dialog(weighting, this);
+
+        if (dialog.exec() == QDialog::Accepted)
+        {
+            weighting->setValid (true);
+            _database.addWeighting(weighting);
+        }
+
+        delete weighting; // HACK!!! May I should they store in a vector.
     }
 
     _ui->_weightingView->getAllWeightings();
@@ -169,8 +177,6 @@ void MainWindow::stopWeighting(Weighting* weighting)
 
 void MainWindow::manualWeighting(void)
 {
-    qDebug() << __PRETTY_FUNCTION__;
-
     _menuStartWeighting->setDisabled(true);
     _menuManualInput->setDisabled(true);
     _ui->_vehicleStack->setDisabled(true);

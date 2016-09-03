@@ -1,5 +1,13 @@
 <RCC>
   <qresource prefix="vehicle">
+    <file>truck-five-axes-boxed-g.png</file>
+    <file>truck-five-axes-boxed-r.png</file>
+    <file>truck-four-axes-boxed-g.png</file>
+    <file>truck-four-axes-boxed-r.png</file>
+    <file>truck-three-axes-boxed-g.png</file>
+    <file>truck-three-axes-boxed-r.png</file>
+    <file>truck-two-axes-boxed-g.png</file>
+    <file>truck-two-axes-boxed-r.png</file>
     <file>truck-two-axes.png</file>
     <file>truck-three-axes.png</file>
     <file>truck-four-axes.png</file>

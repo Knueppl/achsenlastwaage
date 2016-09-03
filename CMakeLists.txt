@@ -32,6 +32,7 @@ set(MOC_HEADERS ${SRC_DIR}/SupplierDialog.h
                 ${SRC_DIR}/Fzw12.h
                 ${SRC_DIR}/WeightingView.h
                 ${SRC_DIR}/ManualInputWidget.h
+                ${SRC_DIR}/CheckWeightingDialog.h
                 )
 
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
@@ -45,6 +46,7 @@ qt4_wrap_ui(MOC_FORMS
             ${FORM_DIR}/DatabaseCombo.ui
             ${FORM_DIR}/WeightingView.ui
             ${FORM_DIR}/ManualInputWidget.ui
+            ${FORM_DIR}/CheckWeightingDialog.ui
             )
 
 qt4_add_resources(RESOURCES
@@ -72,6 +74,7 @@ set(SRC ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/SerialPort.cpp
         ${SRC_DIR}/WeightingView.cpp
         ${SRC_DIR}/ManualInputWidget.cpp
+        ${SRC_DIR}/CheckWeightingDialog.cpp
         ${SRC_DIR}/achsenlastwaage.cpp
         ${RESOURCES}
         ${MOC_SOURCES}

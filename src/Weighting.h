@@ -18,7 +18,8 @@ public:
     void start(const Vehicle* vehicle, const int goodId = 0, const int supplierId = 0, const int fieldId = 0);
     void clear(void);
     bool finished(void) const { return _finished; }
-    bool valid(void) const;
+    bool valid(void) const { return _valid; }
+    bool setValid(const bool valid) { _valid = valid; }
 
     int brutto(void) const { return _weight; }
     int tara(void) const { return _vehicle->tara(); }
@@ -38,6 +39,7 @@ private:
     QVector<int> _weights;
     int _weight;
     bool _finished;
+    bool _valid;
 };
 
 #endif
