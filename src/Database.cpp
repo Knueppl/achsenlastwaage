@@ -94,6 +94,9 @@ bool Database::checkIfTablesExits(const QString& database)
 
 void Database::createDatabase(const QString& database)
 {
+    // First connect to the default database.
+    this->connect("information_schema");
+
     // Create a new database itself.
     QSqlQuery query(_database);
 
