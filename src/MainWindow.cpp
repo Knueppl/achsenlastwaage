@@ -105,6 +105,7 @@ void MainWindow::addVehicle(void)
 
     // It is for the manual input.
     action = new QAction(dialog.vehicle()->name(), _menuManualInput);
+    action->setData(data);
     _menuManualInput->addAction(action);
     this->connect(action, SIGNAL(triggered()), this, SLOT(manualWeighting()));
 }
