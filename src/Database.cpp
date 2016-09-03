@@ -29,6 +29,7 @@ bool Database::connect(const QString& database, const QString& address)
 void Database::disconnect(void)
 {
     _database.close();
+    _currentDatabase.clear();
 }
 
 bool Database::selectDatabase(const QString& database)
@@ -41,6 +42,10 @@ bool Database::selectDatabase(const QString& database)
         QMessageBox::critical(0, QObject::tr("Database Error"), _database.lastError().text());
         return false;
     }
+
+    _currentDatabase = database;
+
+    return true;
 }
 
 QVector<QString> Database::databases(void)

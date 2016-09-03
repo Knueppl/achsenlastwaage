@@ -122,6 +122,8 @@ void MainWindow::selectDatabase(void)
         _ui->_suppliers->getAllSuppliersFromDatabase();
         _ui->_fields->getAllFieldsFromDatabase();
         _ui->_weightingView->getAllWeightings();
+
+        this->setWindowTitle("Verbunden mit der Datenbank " + _database.currentDatabase());
     }
 }
 

@@ -18,6 +18,7 @@ public:
     void disconnect(void);
     bool selectDatabase(const QString& database);
     QVector<QString> databases(void);
+    const QString& currentDatabase(void) const { return _currentDatabase; }
 
     void createDatabase(const QString& database);
     void save(const QString& fileName);
@@ -59,6 +60,7 @@ private:
     bool checkIfTablesExits(const QString&  database);
 
     QSqlDatabase _database;
+    QString _currentDatabase;
 };
 
 #endif
