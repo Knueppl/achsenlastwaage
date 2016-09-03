@@ -212,6 +212,7 @@ void MainWindow::manualWeighting(void)
     if (dialog.exec() == QDialog::Accepted)
     {
         _database.addWeighting(dialog.getWeighting());
+        _ui->_weightingView->getAllWeightings();
     }
 
     _menuStartWeighting->setEnabled(true);

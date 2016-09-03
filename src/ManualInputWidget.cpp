@@ -63,7 +63,7 @@ void ManualInputWidget::createWeighting(void)
 {
     *_weighting << _ui->_spinBrutto->value();
 
-    while (!_weighting->valid())
+    while (!_weighting->finished())
         *_weighting << 0;
 
     this->accept();
