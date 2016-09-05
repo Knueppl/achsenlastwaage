@@ -124,3 +124,8 @@ void WeightingScene::tick(void)
 
     _vehicleItem->moveBy(-1, 0);
 }
+
+void WeightingScene::showError(void)
+{
+    _vehicleItem = this->addPixmap(VehicleButton::getVehicleIconError(_vehicleType));
+}

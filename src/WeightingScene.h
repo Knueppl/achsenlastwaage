@@ -20,7 +20,7 @@ public:
     void setNextWeight(const int kg);
 
 public slots:
-    void showError(void) { _showError = true; }
+    void showError(void);
 
 private slots:
     void tick(void);

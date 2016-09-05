@@ -47,3 +47,8 @@ void ScaleWidget::showAxisWeight(const int kg)
 {
     _scene->setNextWeight(kg);
 }
+
+void ScaleWidget::showError (void)
+{
+    _scene->showError();
+}
