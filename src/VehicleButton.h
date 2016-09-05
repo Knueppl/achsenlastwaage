@@ -22,6 +22,7 @@ public:
     };
 
     static QPixmap getVehicleIcon(const VehicleType type);
+    static QPixmap getVehicleIconError(const VehicleType type);
     static QPointF getIconAxesCoordinate(const VehicleType type, const int axis);
 
 protected:
@@ -36,6 +37,7 @@ private:
     bool _entered = false;
 
     static QVector<QPixmap> s_icons;
+    static QVector<QPixmap> s_iconsError;
     static QVector<QVector<QPointF> > s_iconAxesCoordinates;
 };
 

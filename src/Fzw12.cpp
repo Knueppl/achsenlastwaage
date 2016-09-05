@@ -40,6 +40,7 @@ void Fzw12::readPort(void)
         if (m_port->getBuffer().contains("Fehler:"))
         {
             error = true;
+            emit this->errorOccurred ();
         }
 
         m_port->deleteLeft(m_port->getBuffer().indexOf(compareString) + strlen(compareString));

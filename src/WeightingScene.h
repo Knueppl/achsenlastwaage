@@ -19,6 +19,9 @@ public:
     void start(const Vehicle* vehicle);
     void setNextWeight(const int kg);
 
+public slots:
+    void showError(void) { _showError = true; }
+
 private slots:
     void tick(void);
 
@@ -34,6 +37,7 @@ private:
     VehicleButton::VehicleType _vehicleType;
     int _currentAxis;
     int _sum;
+    bool _showError;
 
     QTimer _timer;
 };

@@ -16,7 +16,8 @@ WeightingScene::WeightingScene(QObject* parent)
       _weightsItem(0),
       _weightsLabelItem(0),
       _vehicle(0),
-      _currentAxis(-1)
+      _currentAxis(-1),
+      _showError(false)
 {
     QPen pen;
     QBrush brush(Qt::black);

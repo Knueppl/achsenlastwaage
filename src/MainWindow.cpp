@@ -48,6 +48,7 @@ MainWindow::MainWindow(void)
     _scaleWidget->show();
     this->connect(_scale, SIGNAL(finished(Weighting*)), this, SLOT(stopWeighting(Weighting*)));
     this->connect(_scale, SIGNAL(axisWeight(const int)), _ui->_scale, SLOT(showAxisWeight(const int)));
+    this->connect(_scale, SIGNAL(errorOccurred()), _ui->_scale, SLOT(showError()));
 }
 
 MainWindow::~MainWindow(void)

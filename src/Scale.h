@@ -23,6 +23,7 @@ signals:
     void finished(Weighting* weight);
     void started(void);
     void axisWeight(const int kg);
+    void errorOccurred(void);
 
 protected:
     void setNextAxisWeight(const int kg);
