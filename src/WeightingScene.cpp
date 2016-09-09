@@ -127,5 +127,15 @@ void WeightingScene::tick(void)
 
 void WeightingScene::showError(void)
 {
+    QPointF vehiclePos(30, -VehicleButton::getVehicleIconError(_vehicleType).height() - 4);
+
+    if (_vehicleItem)
+    {
+        vehiclePos = _vehicleItem->pos();
+        this->removeItem(_vehicleItem);
+        delete _vehicleItem;
+    }
+
     _vehicleItem = this->addPixmap(VehicleButton::getVehicleIconError(_vehicleType));
+    _vehicleItem->setPos(vehiclePos);
 }
