@@ -21,6 +21,7 @@ public:
 public slots:
     void getAllWeightings(void);
     void filterHasBeenChanged(int index);
+    void exportCsv(void);
 
 private:
     void getSuppliers(const QString& field = QString(),
@@ -38,6 +39,7 @@ private:
 
     Ui::WeightingView* _ui;
     Database* _database;
+    QVector<StoredWeighting> _weightings;
 };
 
 #endif

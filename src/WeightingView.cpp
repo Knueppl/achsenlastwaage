@@ -2,6 +2,10 @@
 #include "ui_WeightingView.h"
 
 #include <QDebug>
+#include <QFile>
+#include <QTextStream>
+#include <QFileDialog>
+#include <QMessageBox>
 
 WeightingView::WeightingView(QWidget* parent)
     : QWidget(parent),
@@ -37,6 +41,7 @@ WeightingView::WeightingView(QWidget* parent)
                   SIGNAL(currentIndexChanged(int)),
                   this,
                   SLOT(filterHasBeenChanged(int)));
+    this->connect(_ui->_pushExportCsv, SIGNAL(clicked()), this, SLOT(exportCsv()));
 }
 
 void WeightingView::setDatabase (Database &database)
@@ -52,32 +57,31 @@ void WeightingView::getAllWeightings(void)
         return;
     }
 
-    QVector<StoredWeighting> weightings;
+    _weightings.clear();
+    _database->getWeightings(_weightings);
+    _ui->_table->setRowCount(_weightings.size());
 
-    _database->getWeightings(weightings);
-    _ui->_table->setRowCount(weightings.size());
-
-    for (int row = 0; row < weightings.size(); row++)
+    for (int row = 0; row < _weightings.size(); row++)
     {
-        _ui->_table->setItem(row, 0, new QTableWidgetItem(QString::number(weightings[row].id())));
-        _ui->_table->setItem(row, 1, new QTableWidgetItem(weightings[row].vehicle()));
-        _ui->_table->setItem(row, 2, new QTableWidgetItem(weightings[row].date().toString("yyyy.MM.dd hh:mm:ss")));
-        _ui->_table->setItem(row, 3, new QTableWidgetItem(weightings[row].good()));
-        _ui->_table->setItem(row, 4, new QTableWidgetItem(weightings[row].supplier()));
-        _ui->_table->setItem(row, 5, new QTableWidgetItem(weightings[row].field()));
-        _ui->_table->setItem(row, 6, new QTableWidgetItem(QString::number(weightings[row].brutto())));
-        _ui->_table->setItem(row, 7, new QTableWidgetItem(QString::number(weightings[row].tara())));
-        _ui->_table->setItem(row, 8, new QTableWidgetItem(QString::number(weightings[row].netto())));
+        _ui->_table->setItem(row, 0, new QTableWidgetItem(QString::number(_weightings[row].id())));
+        _ui->_table->setItem(row, 1, new QTableWidgetItem(_weightings[row].vehicle()));
+        _ui->_table->setItem(row, 2, new QTableWidgetItem(_weightings[row].date().toString("yyyy.MM.dd hh:mm:ss")));
+        _ui->_table->setItem(row, 3, new QTableWidgetItem(_weightings[row].good()));
+        _ui->_table->setItem(row, 4, new QTableWidgetItem(_weightings[row].supplier()));
+        _ui->_table->setItem(row, 5, new QTableWidgetItem(_weightings[row].field()));
+        _ui->_table->setItem(row, 6, new QTableWidgetItem(QString::number(_weightings[row].brutto())));
+        _ui->_table->setItem(row, 7, new QTableWidgetItem(QString::number(_weightings[row].tara())));
+        _ui->_table->setItem(row, 8, new QTableWidgetItem(QString::number(_weightings[row].netto())));
     }
 
     // Select the last row.
     _ui->_table->selectRow(_ui->_table->rowCount() - 1);
 
-   // Space for tests.
-   this->getSuppliers ();
-   this->getFields ();
-   this->getGoods ();
-   this->getVehicles ();
+    // Space for tests.
+    this->getSuppliers ();
+    this->getFields ();
+    this->getGoods ();
+    this->getVehicles ();
 }
 
 void WeightingView::filterHasBeenChanged(int)
@@ -212,4 +216,36 @@ void WeightingView::getVehicles(const QString& supplier, const QString& field, c
    }
 
    this->connect(_ui->_comboVehicle, SIGNAL(currentIndexChanged(int)), this, SLOT(filterHasBeenChanged(int)));
+}
+
+void WeightingView::exportCsv(void)
+{
+    const QString fileName(QFileDialog::getSaveFileName(this,
+                                                        "Wählen Sie bitte einen Dateinamen aus.",
+                                                        "~/"
+                                                        "*.csv"));
+
+    if (fileName.isEmpty())
+        return;
+
+    QFile file(fileName);
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox::critical(0, "Dateifehler", QString("Kann die Datei ") + fileName + QString(" nicht öffnen"));
+        return;
+    }
+
+    QTextStream out(&file);
+    out << "Wiegung; Fahrzeug; Datum/Uhrzeit; Ware; Lieferant; Feld; Brutto; Tara; Netto\n";
+
+    for (auto& weighting : _weightings)
+    {
+        out << weighting.id() << "; " << weighting.vehicle() << "; "
+            << weighting.date().toString("yyyy:MM:dd hh:mm:ss") << "; " << weighting.good() << "; "
+            << weighting.supplier() << "; " << weighting.field() << "; " << weighting.brutto() << "; "
+            << weighting.tara() << "; " << weighting.netto() << "\n";
+    }
+
+    file.close();
 }

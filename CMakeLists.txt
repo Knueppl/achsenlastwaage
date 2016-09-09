@@ -33,6 +33,7 @@ set(MOC_HEADERS ${SRC_DIR}/SupplierDialog.h
                 ${SRC_DIR}/WeightingView.h
                 ${SRC_DIR}/ManualInputWidget.h
                 ${SRC_DIR}/CheckWeightingDialog.h
+                ${SRC_DIR}/SignalLight.h
                 )
 
 qt4_wrap_cpp(MOC_SOURCES ${MOC_HEADERS})
@@ -75,6 +76,8 @@ set(SRC ${SRC_DIR}/SupplierDialog.cpp
         ${SRC_DIR}/WeightingView.cpp
         ${SRC_DIR}/ManualInputWidget.cpp
         ${SRC_DIR}/CheckWeightingDialog.cpp
+        ${SRC_DIR}/SignalLight.cpp
+        ${SRC_DIR}/Led.cpp
         ${SRC_DIR}/achsenlastwaage.cpp
         ${RESOURCES}
         ${MOC_SOURCES}

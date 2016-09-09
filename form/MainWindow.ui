@@ -139,14 +139,25 @@
      </layout>
     </item>
     <item>
-     <widget class="WeightingView" name="_weightingView" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="WeightingView" name="_weightingView" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="SignalLight" name="groupBox">
+        <property name="title">
+         <string>GroupBox</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -197,6 +208,12 @@
    <class>WeightingView</class>
    <extends>QWidget</extends>
    <header>WeightingView.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SignalLight</class>
+   <extends>QGroupBox</extends>
+   <header>SignalLight.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
