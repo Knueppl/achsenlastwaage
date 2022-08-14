@@ -1,0 +1,44 @@
+{
+  "name": "achsenlastwaage",
+  // "image": "debian:oldstable",
+  "build": { "dockerfile": "Dockerfile" },
+  "runArgs": [
+    "-it",
+    "--gpus",
+    "all",
+    "--net=host",
+    "--pid=host",
+    "--env=DISPLAY",
+    "--env=QT_X11_NO_MITSHM=1",
+    "--volume=/tmp/.X11-unix:/tmp/.X11-unix:rw",
+  ],
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "containerEnv": {
+    "http_proxy": "${localEnv:http_proxy}",
+    "https_proxy": "${localEnv:http_proxy}"
+  },
+  //  "mounts": [
+  //   "source=/home/knueppl/ros/francor,target=/home/ros,type=bind,consistency=cached",
+  //   // "source=/home/knueppl/Downloads,target=/home/developer/Downloads,type=bind,consistency=cached",
+  //  ],
+  // "remoteUser": "root",
+  "extensions": [
+	"ms-vscode.cpptools",
+	"ms-vscode.cpptools-linux",
+	"ms-vscode.cmake-tools",
+	"ms-python.python",
+	"ms-azuretools.vscode-docker",
+	"ms-vscode-remote.remote-containers",
+	"vscode-icons-team.vscode-icons",
+	"editorconfig.editorconfig",
+	"eamodio.gitlens",
+	"xaver.clang-format",
+	"streetsidesoftware.code-spell-checker",
+	"cschlosser.doxdocgen",
+	"yzhang.markdown-all-in-one",
+	"streetsidesoftware.code-spell-checker",
+	"llvm-vs-code-extensions.vscode-clangd"
+]
+}

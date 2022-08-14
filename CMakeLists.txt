@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
+project(achsenlastwaage)
+
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 set(FORM_DIR ${CMAKE_SOURCE_DIR}/form)
 set(PIC_DIR ${CMAKE_SOURCE_DIR}/picture)
